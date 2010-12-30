@@ -1,6 +1,7 @@
 I wrote a little Linux driver based on Andy Wingo's work (http://wingolog.org/pub/nvbacklight-0.1.tar.bz2) and MacTel Team (https://launchpad.net/~mactel-suppor..._filter=karmic) that enables the control of laptop backlight connected to NVIDIA chip using the /sys/class/backlight interface.
 Kubuntu 9.10 for instance uses this interface to send back backlight control button events.
 It is tested with a Sony AW11M/H laptop (Nvidia 9300M GS). Other users successfully tested it on other laptops as you can see in this topic.
+If you use Ubuntu, you can simply install the attached nvidiabl-dkms_xxxx_all.deb file.
 If not already done, install DKMS, for instance with Ubuntu:
 
 sudo aptitude update && sudo aptitude install dkms
@@ -11,24 +12,23 @@ dkms status
 
 It gives me:
 
-guillaume@Guillaume:~$ dkms status
 vboxhost, 3.2.10, 2.6.35-22-generic, x86_64: installed  (WARNING! Diff between built and installed module!) (WARNING! Diff between built and installed module!) (WARNING! Diff between built and installed module!)
 nvidiabl, 0.56, 2.6.35-22-generic, x86_64: installed 
 nvidia-current, 260.19.06, 2.6.35-22-generic, x86_64: installed 
 nvidia-current, 260.19.06, 2.6.32-25-generic, x86_64: built
 
-Remove any old version:
-
-sudo dkms remove -m olddrivername -v xxxx --all
-
-In my case:
+Remove any old version, in that case:
 
 sudo dkms remove -m nvidiabl -v 0.56 --all
 
 Be aware that the driver name has been changed recently from nvidia_bl to nvidiabl to prevent some DKMS parsing problems.
-Make a link to the source:
+If you downloaded and uncompressed directly the 0.57 source, make a link to the source, for instance:
 
-sudo ln -s /usr/src/nvidiabl /usr/src/nvidiabl-0.57
+sudo ln -s ~/nvidiabl /usr/src/nvidiabl-0.57
+
+Or if you downloaded the nvidiabl-0.57-source-only.dkms.tar.gz file:
+
+sudo dkms ldtarball --archive=nvidiabl-0.57-source-only.dkms.tar.gz
 
 Add, build and install the module:
 
@@ -61,3 +61,9 @@ and
 
 module_param_named(model, model, charp, 0644);
 MODULE_PARM_DESC(model, "backlight model, must be empty for autodetection, nv4x or nv5x");
+
+I attached too some ACPI scripts examples that permit on my laptop to use Fn keys to change the backlight value. There is an intereting script here too: http://dev.osource.se/software/obacklight/.
+
+nVidia staff is of course free to ship this driver with theirs!
+
+Guillaume
