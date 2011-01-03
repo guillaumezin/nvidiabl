@@ -1,11 +1,12 @@
 TARGET 		:= nvidiabl
-VERSION		:= 0.57
+VERSION		:= 0.58
 RELEASE_NAME	:= $(TARGET)-$(VERSION)
 
 KVER		:= $(shell uname -r)
 KDIR		?= /lib/modules/$(KVER)/build
 PWD		:= $(shell pwd)
-MODPATH		:= $(DESTDIR)/lib/modules/$(KVER)/kernel/drivers/video/backlight
+LOC		:= /kernel/drivers/video/backlight
+MODPATH		:= $(DESTDIR)/lib/modules/$(KVER)$(LOC)
 INCPATH		:= $(DESTDIR)/lib/modules/$(KVER)/include
 
 OBJS 		:= nvidiabl-module.o nvidiabl-models.o
@@ -40,7 +41,7 @@ uninstall:
 	/sbin/depmod -a
 
 clean:
-	find . \( -name '.tmp*' -o -name '.*.cmd' -o -name '*.symvers' -o -name '*.order' -o -name '*.markers' -o -name '*.mod.c' -o -name '*.ko' -o -name '*.o' \) -print0 | xargs -0 rm -Rf
+	find . \( -name dkms.conf -o -name '.tmp*' -o -name '.*.cmd' -o -name '*.symvers' -o -name '*.order' -o -name '*.markers' -o -name '*.mod.c' -o -name '*.ko' -o -name '*.o' \) -print0 | xargs -0 rm -Rf
 
 #depend .depend dep:
 #	$(CC) $(CFLAGS) -M *.c > .depend
@@ -65,3 +66,28 @@ release: clean
         done
 	@tar -c $(DISTDIR) | bzip2 -9 > $(RELEASE_NAME).tar.bz2
 	@rm -rf $(DISTDIR)
+
+dkms-conf:
+	@echo "DEST_MODULE_LOCATION[0]=\"$(LOC)\"" > dkms.conf
+	@echo "PACKAGE_NAME=\"$(TARGET)\"" >> dkms.conf
+	@echo "PACKAGE_VERSION=\"$(VERSION)\"" >> dkms.conf
+	@echo "CLEAN=\"make -C \$${kernel_source_dir} SUBDIRS=\$${dkms_tree}/\$${PACKAGE_NAME}/\$${PACKAGE_VERSION}/build clean\"" >> dkms.conf
+	@echo "BUILT_MODULE_NAME[0]=\"\$${PACKAGE_NAME}\"" >> dkms.conf
+	@echo "MAKE[0]=\"make -C \$${kernel_source_dir} SUBDIRS=\$${dkms_tree}/\$${PACKAGE_NAME}/\$${PACKAGE_VERSION}/build modules\"" >> dkms.conf
+	@echo "REMAKE_INITRD=\"no\"" >> dkms.conf
+	@echo "AUTOINSTALL=\"yes\"" >> dkms.conf
+
+dkms-remove:
+	sudo dkms remove -m $(TARGET) -v $(VERSION) --all
+	sudo rm /usr/src/$(TARGET)-$(VERSION)
+
+dkms-install: dkms-conf
+	cd /usr/src && sudo ln -s $(PWD) $(TARGET)-$(VERSION)
+	sudo dkms add build install -m $(TARGET) -v $(VERSION)
+
+dkms-release: dkms-install
+	sudo dkms mkdeb mktarball --source-only -m $(TARGET) -v $(VERSION)
+	git commit *
+	git push
+	git tag -f v$(VERSION)
+	git push --tags

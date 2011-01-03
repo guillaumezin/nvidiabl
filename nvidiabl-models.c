@@ -285,6 +285,8 @@ DEFINE_PCI_DEVICE_TABLE(nvidiabl_device_table) = {
         { PCI_VDEVICE(NVIDIA, 0x0a69), (kernel_ulong_t)&nv5x_driver_data },
         /* NVIDIA GeForce 310M */
         { PCI_VDEVICE(NVIDIA, 0x0a75), (kernel_ulong_t)&nv5x_driver_data },
+	/* NVIDIA GeForce 330M */
+	{ PCI_VDEVICE(NVIDIA, 0x0a2b), (kernel_ulong_t)&nv5x_driver_data },
         /* end of list */
         { }
 };
