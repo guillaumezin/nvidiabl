@@ -54,4 +54,10 @@ typedef struct {
         .driver_data    = (void *)pci_device_code \
 }
 
+#define NVIDIABL_DECLARE_GPU_MODEL(pci_device_code, algorithm) \
+    {\
+        PCI_VDEVICE(NVIDIA, pci_device_code), \
+        (kernel_ulong_t)&algorithm \
+    }
+
 #endif

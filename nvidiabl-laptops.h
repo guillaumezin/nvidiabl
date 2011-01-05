@@ -3,7 +3,7 @@
  * Second argument comes from "cat /sys/class/dmi/id/product_name" (it can be the beginning of the string only to cover more than one model)
  * Third argument comes from "lspci -nn | grep nVidia", last four hex digits
  *      for instance "01:00.0 VGA compatible controller [0300]: nVidia Corporation G98 [GeForce 9300M GS] [10de:06e9] (rev a1)" gives 0x06e9
- *      obtained number must be listed in "nvidiabl-models.c"
+ *      obtained number must be listed in "nvidiabl-gpu.h"
  * Fourth argument is the value to disable the backlight, it is 0 usually, -1 to use default value
  * Fifth is minimum backlight value, -1 to use default value
  * Sixth is maximum backlight value, -1 to use default value

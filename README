@@ -1,48 +1,116 @@
 I wrote a little Linux driver based on Andy Wingo's work (http://wingolog.org/pub/nvbacklight-0.1.tar.bz2) and MacTel Team (https://launchpad.net/~mactel-suppor..._filter=karmic) that enables the control of laptop backlight connected to NVIDIA chip using the /sys/class/backlight interface.
-Kubuntu 9.10 for instance uses this interface to send back backlight control button events.
-It is tested with a Sony AW11M/H laptop (Nvidia 9300M GS). Other users successfully tested it on other laptops as you can see in this topic.
-If you use Ubuntu, you can simply install the attached nvidiabl-dkms_xxxx_all.deb file.
+Kubuntu 9.10 for instance uses this interface to control the backlight from powerdevil.
+It is tested with a Sony AW11M/H laptop (Nvidia 9300M GS). Other users successfully tested it on other laptops (have a look at the nvidiabl-laptops.h file).
+
+
+Installation from nvidiabl-dkms_xxxx_all.deb file (Debian and distributions based on it):
+_________________________________________________________________________________________
+
+Install the file from your favorite software manager or type:
+
+sudo dkms -i nvidiabl-dkms_xxxx_all.deb
+
+
+Uninstallation (after installation from nvidiabl-dkms_xxxx_all.deb file):
+_________________________________________________________________________
+
+Uninstall the nvidiabl package from your favorite software manager or type:
+
+sudo dkms -r nvidiabl
+
+
+Installation from nvidiabl-x.xx-source-only.dkms.tar.gz file:
+_____________________________________________________________
+
 If not already done, install DKMS, for instance with Ubuntu:
 
 sudo aptitude update && sudo aptitude install dkms
 
-If you installed a previous nvbacklight, nvidia_bl or nvidiabl driver, check if some old versions are still present:
+Then:
+
+sudo dkms ldtarball --archive=nvidiabl-x.xx-source-only.dkms.tar.gz build install
+
+Where x.xx is the nvidiabl module version.
+
+
+Uninstallation (after installation from nvidiabl-x.xx-source-only.dkms.tar.gz file):
+____________________________________________________________________________________
+
+cd /usr/src/nvidiabl-x.xx
+make dkms-remove
+
+Where x.xx is the nvidiabl module version. To know what version are installed on your system, type:
 
 dkms status
 
-It gives me:
+If nvidiabl is the last module to use DKMS, you can remove the DKMS package, for instance with Ubuntu, type:
 
-vboxhost, 3.2.10, 2.6.35-22-generic, x86_64: installed  (WARNING! Diff between built and installed module!) (WARNING! Diff between built and installed module!) (WARNING! Diff between built and installed module!)
-nvidiabl, 0.56, 2.6.35-22-generic, x86_64: installed 
-nvidia-current, 260.19.06, 2.6.35-22-generic, x86_64: installed 
-nvidia-current, 260.19.06, 2.6.32-25-generic, x86_64: built
+sudo aptitude remove dkms
 
-Remove any old version, in that case:
 
-sudo dkms remove -m nvidiabl -v 0.56 --all
+Installation from source files:
+_______________________________
 
-Be aware that the driver name has been changed recently from nvidia_bl to nvidiabl to prevent some DKMS parsing problems.
-If you downloaded and uncompressed directly the 0.57 source, make a link to the source, for instance:
+If not already done, install DKMS, for instance with Ubuntu, type:
 
-sudo ln -s ~/nvidiabl /usr/src/nvidiabl-0.57
+sudo aptitude update && sudo aptitude install dkms
 
-Or if you downloaded the nvidiabl-0.57-source-only.dkms.tar.gz file:
+Uncompress the source files and from that directory, type:
 
-sudo dkms ldtarball --archive=nvidiabl-0.57-source-only.dkms.tar.gz
+make dkms-install
 
-Add, build and install the module:
+Then you can erase the directory where source files have been uncompressed.
 
-sudo dkms add build install -m nvidiabl -v 0.57
 
-The driver autoloads for Sony Vaio VGN AW11, FZ11 and FZ38 laptops and other laptops, have a look in the "nvidiabl-laptops.h" file.
-To load the driver manually, you need to add a line containing "nvidiabl" in "/etc/modules".
-If you want the driver to autoload for your laptop without adding a line to "/etc/modules", please give me the output of:
+Uninstallation (after installation from nvidiabl-x.xx-source-only.dkms.tar.gz file or from source files version 0.59 or newer):
+_______________________________________________________________________________________________________________________________
+
+cd /usr/src/nvidiabl-x.xx
+make dkms-remove
+
+Where x.xx is the nvidiabl module version. To know what versions are installed on your system, type:
+
+dkms status
+
+If nvidiabl is the last module to use DKMS, you can remove the DKMS package, for instance with Ubuntu, type:
+
+sudo aptitude remove dkms
+
+
+Uninstallation (after installation from source files or from nvidiabl-x.xx-source-only.dkms.tar.gz for version 0.58 or older):
+______________________________________________________________________________________________________________________________
+
+sudo dkms remove -m nvidiabl -v x.xx --all
+sudo rm -rf /usr/src/nvidiabl-x.xx
+
+Where x.xx is the nvidiabl module version 0.58 or previous. To know what version are installed on your system, type:
+
+dkms status
+
+On some older version, the package name can be nvbacklight or nvidia_bl.
+
+If nvidiabl is the last module to use DKMS, you can remove the DKMS package, for instance with Ubuntu, type:
+
+sudo aptitude remove dkms
+
+
+Driver loading:
+_______________
+
+The driver autoloads at boot up for Sony Vaio VGN AW11, FZ11 and FZ38 laptops and other laptops, have a look in the nvidiabl-laptops.h file.
+To load the driver manually, you need to add a line containing nvidiabl in /etc/modules.
+If you want the driver to autoload for your laptop without adding a line to /etc/modules, please give me the output of:
 
 lspci -nn
 cat /sys/class/dmi/id/sys_vendor
 cat /sys/class/dmi/id/product_name
 
-If you know Linux driver programming, you can then modify yourself the "nvidiabl-laptops.h" and send me the line you added.
+
+Driver debug:
+_____________
+
+If you know Linux driver programming, you can then modify yourself the nvidiabl-laptops.h and send me the line you added.
+
 You can debug the driver with the following options:
 
 module_param_named(off, off, long, 0644);
@@ -57,12 +125,22 @@ MODULE_PARM_DESC(max, "maximum register value for the backlight");
 module_param_named(pci_id, pci_id, ulong, 0644);
 MODULE_PARM_DESC(pci_id, "PCI ID of the Nvidia card - usefull only when not using autodetection and more than one Nvidia PCI device");
 
-and
-
 module_param_named(model, model, charp, 0644);
 MODULE_PARM_DESC(model, "backlight model, must be empty for autodetection, nv4x or nv5x");
 
-I attached too some ACPI scripts examples that permit on my laptop to use Fn keys to change the backlight value. There is an intereting script here too: http://dev.osource.se/software/obacklight/.
+For instance, if you want to test 50 as min value and 500 as max value, type:
+
+sudo modprobe -r nvidiabl
+sudo modprobe nvidiabl min=50 max=500
+
+
+I can change the backlight value from the power settings GUI but my Fn keys are not working:
+____________________________________________________________________________________________
+
+On https://github.com/guillaumezin/nvidiabl, I attached some ACPI scripts examples that permit on my laptop to use Fn keys to change the backlight settings. This is an ugly workaround (you don't have OSD this way), good practive should be to have a look at the /usr/share/doc/udev/README.keymap.txt.gz and fill a bug report.
+
+There is some intereting scripts here too: http://dev.osource.se/software/obacklight/.
+
 
 nVidia staff is of course free to ship this driver with theirs!
 
