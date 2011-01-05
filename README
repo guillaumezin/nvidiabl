@@ -8,7 +8,7 @@ ________________________________________________________________________________
 
 Install the file from your favorite software manager or type:
 
-sudo dkms -i nvidiabl-dkms_xxxx_all.deb
+sudo dpkg -i nvidiabl-dkms_xxxx_all.deb
 
 
 Uninstallation (after installation from nvidiabl-dkms_xxxx_all.deb file):
@@ -16,7 +16,7 @@ _________________________________________________________________________
 
 Uninstall the nvidiabl package from your favorite software manager or type:
 
-sudo dkms -r nvidiabl
+sudo dpkg -r nvidiabl
 
 
 Installation from nvidiabl-x.xx-source-only.dkms.tar.gz file:
