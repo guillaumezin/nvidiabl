@@ -1,4 +1,19 @@
 /*
+ * Nvidia mobile GPU list with associated intensity algorithm.
+ *
+ * Copyright (c) 2009-2011 Guillaume Zin <guillaume.zin@gmail.com>
+ * Copyright (c) 2008-2009 Mario Schwalbe <schwalbe@inf.tu-dresden.de>
+ * Based on the mechanism discovered by the author of NvClock:
+ * Copyright (c) 2001-2009 Roderick Colenbrander
+ *     Site: http://nvclock.sourceforge.net
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ */
+
+/*
  * First argument comes from "lspci -nn | grep nVidia", last four hex digits
  *      for instance "01:00.0 VGA compatible controller [0300]: nVidia Corporation G98 [GeForce 9300M GS] [10de:06e9] (rev a1)" gives 0x06e9
  * Second argument is the algortihm name that comes from nvidiabl-models.c (currently nv4x_driver_data or nv5x_driver_data)

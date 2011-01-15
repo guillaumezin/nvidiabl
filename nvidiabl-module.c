@@ -1,8 +1,9 @@
 /*
  * Backlight driver for Nvidia graphics adapters.
  *
+ * Copyright (c) 2009-2011 Guillaume Zin <guillaume.zin@gmail.com>
  * Copyright (c) 2008-2009 Mario Schwalbe <schwalbe@inf.tu-dresden.de>
- * Based on the mechanism dicovered by the author of NvClock:
+ * Based on the mechanism discovered by the author of NvClock:
  * Copyright (c) 2001-2009 Roderick Colenbrander
  *     Site: http://nvclock.sourceforge.net
  * 
@@ -158,6 +159,8 @@ static int nvidiabl_map_smartdimmer(struct driver_data *dd)
 	if (!dd->smartdimmer)
 		return -ENXIO;
 
+        //printk(KERN_DEBUG "nvidiabl: smartdimmer register at address 0x%lx mapped at address 0x%p\n", reg_addr, dd->smartdimmer);
+
 	return 0;
 }
 
@@ -213,7 +216,7 @@ static int __init nvidiabl_init(void)
 	err = nvidiabl_map_smartdimmer(driver_data);
 	if (err)
 		return err;
-
+        
 	/* Registvder at backlight framework */
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,34)
         memset(&props, 0, sizeof(struct backlight_properties));
