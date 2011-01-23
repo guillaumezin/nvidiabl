@@ -231,24 +231,27 @@ static int __init nvidiabl_init(void)
 
         back = driver_data->backup(driver_data);
         printk(KERN_INFO "nvidiabl: backup register value %d\n", back);
-        
-        
-        if ((max != NVIDIABL_UNSET) && (max != NVIDIABL_DEFAULT))
+
+        if (max == NVIDIABL_UNSET)
+                driver_data->max = NVIDIABL_AUTO;
+        else if (max != NVIDIABL_DEFAULT)
                 driver_data->max = max;
-        
+          
         if (driver_data->max == NVIDIABL_AUTO) {
                 printk(KERN_INFO "nvidiabl: autodetecting maximum\n");
-                driver_data->max = back;
+                driver_data->max = driver_data->autodetect(driver_data, T_NVIDIABL_MAX);
         }
         printk(KERN_INFO "nvidiabl: using value %d as maximum\n", driver_data->max);
 
         
-        if ((off != NVIDIABL_UNSET) && (off != NVIDIABL_DEFAULT))
+        if (off == NVIDIABL_UNSET)
+                driver_data->off = NVIDIABL_AUTO;
+        else if (off != NVIDIABL_DEFAULT)
                 driver_data->off = off;
 
         if (driver_data->off == NVIDIABL_AUTO) {
                 printk(KERN_INFO "nvidiabl: autodetecting off\n");
-                driver_data->off = NVIDIABL_AUTO_OFF;
+                driver_data->off = driver_data->autodetect(driver_data, T_NVIDIABL_OFF);
         }
         
         if (driver_data->off < 0) {
@@ -260,12 +263,14 @@ static int __init nvidiabl_init(void)
         printk(KERN_INFO "nvidiabl: using value %d as off\n", driver_data->off);
 
 
-        if ((min != NVIDIABL_UNSET) && (min != NVIDIABL_DEFAULT))
+        if (min == NVIDIABL_UNSET)
+                driver_data->min = NVIDIABL_AUTO;
+        else if (min != NVIDIABL_DEFAULT)
                 driver_data->min = min;
 
         if (driver_data->min == NVIDIABL_AUTO) {
                 printk(KERN_INFO "nvidiabl: autodetecting minimum\n");
-                driver_data->min = NVIDIABL_AUTO_MIN;
+                driver_data->min = driver_data->autodetect(driver_data, T_NVIDIABL_MIN);
         }
         
         if (driver_data->min < 0) {

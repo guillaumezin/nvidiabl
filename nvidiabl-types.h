@@ -26,6 +26,8 @@
 #define NVIDIABL_AUTO_OFF       0
 #define NVIDIABL_AUTO_MIN       -5
 
+typedef enum { T_NVIDIABL_OFF, T_NVIDIABL_MIN, T_NVIDIABL_MAX } T_NVIDIABL_VAL;
+
 /* Driver private data structure */
 struct driver_data {
         /* PCI region (BAR) the smartdimmer register is in */
@@ -42,6 +44,7 @@ struct driver_data {
         unsigned backup_value;
         unsigned (*backup)(struct driver_data *);
         unsigned (*restore)(struct driver_data *);
+        unsigned (*autodetect)(struct driver_data *, T_NVIDIABL_VAL which);
 
         /* Backlight operations structure */
         struct backlight_ops backlight_ops;

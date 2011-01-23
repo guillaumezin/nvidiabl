@@ -16,9 +16,12 @@
 #include "nvidiabl-models.h"
 
 /* Register constants */
+#define NV4X_BL_REGISTER_ADDR                           0x15f2
+#define NV4X_BL_REGISTER_MASK                           0x00FFFFFF
 #define NV5X_PDISPLAY_OFFSET                            0x00610000
 #define NV5X_PDISPLAY_SOR0_BRIGHTNESS                   0x0000c084
 #define NV5X_PDIPSLAY_SOR0_BRIGHTNESS_CONTROL_ENABLED   0x80000000
+#define NV5X_PDIPSLAY_SOR0_MASK                         0x00FFFFFF
 
 static char *model = "";
 
@@ -53,6 +56,16 @@ static unsigned nv4x_restore(struct driver_data *dd)
         return dd->backup_value;
 }
 
+/* Must be called after nv4x_backup */
+static unsigned nv4x_autodetect(struct driver_data *dd, T_NVIDIABL_VAL which)
+{
+        switch(which) {
+                  case T_NVIDIABL_OFF: return NVIDIABL_AUTO_OFF;
+                  case T_NVIDIABL_MIN: return NVIDIABL_AUTO_MIN;
+                  default: return dd->backup_value & NV4X_BL_REGISTER_MASK;
+        }
+}
+
 static int nv4x_get_intensity(struct backlight_device *bd)
 {
         struct driver_data *dd = bl_get_data(bd);
@@ -83,13 +96,14 @@ static int nv4x_set_intensity(struct backlight_device *bd)
 
 static struct driver_data nv4x_driver_data = {
         .bar           = 0,
-        .reg_offset    = 0x15f2,
+        .reg_offset    = NV4X_BL_REGISTER_ADDR,
         .reg_size      = 2,
         .off           = 0,
         .min           = 4,
         .max           = 21,
         .backup        = nv4x_backup,
         .restore       = nv4x_restore,
+        .autodetect    = nv4x_autodetect,
         .backlight_ops = {
 #ifdef USE_BACKLIGHT_SUSPEND
                 .options        = BL_CORE_SUSPENDRESUME,
@@ -106,13 +120,23 @@ static struct driver_data nv4x_driver_data = {
 static unsigned nv5x_backup(struct driver_data *dd)
 {
         dd->backup_value = ioread32(dd->smartdimmer);
-        return dd->backup_value;
+        return dd->backup_value ;
 }
 
 static unsigned nv5x_restore(struct driver_data *dd)
 {
         iowrite32(dd->backup_value, dd->smartdimmer);
         return dd->backup_value;
+}
+
+/* Must be called after nv5x_backup */
+static unsigned nv5x_autodetect(struct driver_data *dd, T_NVIDIABL_VAL which)
+{
+        switch(which) {
+                  case T_NVIDIABL_OFF: return NVIDIABL_AUTO_OFF;
+                  case T_NVIDIABL_MIN: return NVIDIABL_AUTO_MIN;
+                  default: return dd->backup_value & NV5X_PDIPSLAY_SOR0_MASK;
+        }
 }
 
 static int nv5x_get_intensity(struct backlight_device *bd)
@@ -153,6 +177,7 @@ static struct driver_data nv5x_driver_data = {
         .max           = 1024,
         .backup        = nv5x_backup,
         .restore       = nv5x_restore,
+        .autodetect    = nv5x_autodetect,
         .backlight_ops = {
 #ifdef USE_BACKLIGHT_SUSPEND
                 .options        = BL_CORE_SUSPENDRESUME,
