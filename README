@@ -114,13 +114,13 @@ If you know Linux driver programming, you can modify yourself the nvidiabl-lapto
 You can debug the driver with the following options:
 
 module_param_named(off, off, long, 0644);
-MODULE_PARM_DESC(off, "value to put in the register to disable the backlight");
+MODULE_PARM_DESC(off, "value to put in the register to disable the backlight, negative value is interpreted as percentage of maximum, -101 for default, autodetect otherwise");
 
 module_param_named(min, min, long, 0644);
-MODULE_PARM_DESC(min, "minimum register value for the backlight");
+MODULE_PARM_DESC(min, "minimum register value for the backlight, negative value is interpreted as percentage of maximum, -101 for default, autodetect otherwise");
 
 module_param_named(max, max, long, 0644);
-MODULE_PARM_DESC(max, "maximum register value for the backlight");
+MODULE_PARM_DESC(max, "maximum register value for the backlight, -101 for default, autodetect otherwise");
 
 module_param_named(pci_id, pci_id, ulong, 0644);
 MODULE_PARM_DESC(pci_id, "PCI ID of the Nvidia card - usefull only when not using autodetection and more than one Nvidia PCI device");

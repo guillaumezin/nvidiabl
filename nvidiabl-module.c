@@ -43,9 +43,9 @@
 #endif
 
 static unsigned long nvidiabl_ignore_device = 0;
-static long off = -1;
-static long min = -1;
-static long max = -1;
+static long off = NVIDIABL_UNSET;
+static long min = NVIDIABL_UNSET;
+static long max = NVIDIABL_UNSET;
 static unsigned long pci_id = PCI_ANY_ID;
 
 /*
@@ -80,11 +80,11 @@ static int nvidiabl_dmi_match(const struct dmi_system_id *id)
         desc = (nvidiabl_descriptor *)(id->driver_data);
         
         pci_id = desc->pci_device_code;
-        if (off < 0)
+        if (off == NVIDIABL_UNSET)
                 off = desc->off;
-        if (min < 0)
+        if (min == NVIDIABL_UNSET)
                 min = desc->min;
-        if (max < 0)
+        if (max == NVIDIABL_UNSET)
                 max = desc->max;
         return 1;
 }
@@ -130,7 +130,7 @@ static int nvidiabl_find_device(struct driver_data **dd, unsigned pci_device, un
                 }
 	}
 
-	printk(KERN_INFO "nvidiabl: No supported Nvidia graphics adapter"
+	printk(KERN_ERR "nvidiabl: No supported Nvidia graphics adapter"
 	       " found\n");
 	return -ENODEV;
 }
@@ -182,7 +182,9 @@ static int nvidiabl_probe(struct platform_device *pdev)
 static int __init nvidiabl_init(void)
 #endif
 {
-	int err;        
+	int err; 
+        unsigned back;
+        s64 calc;
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,34)
         struct backlight_properties props;
 #endif
@@ -203,21 +205,12 @@ static int __init nvidiabl_init(void)
         
         nvidiabl_force_model(&driver_data);
         
-        if (off >= 0)
-                driver_data->off = off;
-
-        if (min >= 0)
-                driver_data->min = min;
-
-        if (max >= 0)
-                driver_data->max = max;
-        
         /* Map smartdimmer */
 	err = nvidiabl_map_smartdimmer(driver_data);
 	if (err)
 		return err;
         
-	/* Registvder at backlight framework */
+	/* Register at backlight framework */
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,34)
         memset(&props, 0, sizeof(struct backlight_properties));
 	nvidiabl_device = backlight_device_register("nvidia_backlight", NULL,
@@ -235,7 +228,56 @@ static int __init nvidiabl_init(void)
 		return PTR_ERR(nvidiabl_device);
 	}
 
-	/* Set up backlight device */
+
+        back = driver_data->backup(driver_data);
+        printk(KERN_INFO "nvidiabl: backup register value %d\n", back);
+        
+        
+        if ((max != NVIDIABL_UNSET) && (max != NVIDIABL_DEFAULT))
+                driver_data->max = max;
+        
+        if (driver_data->max == NVIDIABL_AUTO) {
+                printk(KERN_INFO "nvidiabl: autodetecting maximum\n");
+                driver_data->max = back;
+        }
+        printk(KERN_INFO "nvidiabl: using value %d as maximum\n", driver_data->max);
+
+        
+        if ((off != NVIDIABL_UNSET) && (off != NVIDIABL_DEFAULT))
+                driver_data->off = off;
+
+        if (driver_data->off == NVIDIABL_AUTO) {
+                printk(KERN_INFO "nvidiabl: autodetecting off\n");
+                driver_data->off = NVIDIABL_AUTO_OFF;
+        }
+        
+        if (driver_data->off < 0) {
+                printk(KERN_INFO "nvidiabl: off is %d%% of maximum\n", -1 * driver_data->off);
+                calc = driver_data->max * driver_data->off;
+                calc /= -100;
+                driver_data->off = calc;
+        }
+        printk(KERN_INFO "nvidiabl: using value %d as off\n", driver_data->off);
+
+
+        if ((min != NVIDIABL_UNSET) && (min != NVIDIABL_DEFAULT))
+                driver_data->min = min;
+
+        if (driver_data->min == NVIDIABL_AUTO) {
+                printk(KERN_INFO "nvidiabl: autodetecting minimum\n");
+                driver_data->min = NVIDIABL_AUTO_MIN;
+        }
+        
+        if (driver_data->min < 0) {
+                printk(KERN_INFO "nvidiabl: minimum is %d%% of maximum\n", -1 * driver_data->min);
+                calc = driver_data->max * driver_data->min;
+                calc /= -100;
+                driver_data->min = calc;
+        }
+        printk(KERN_INFO "nvidiabl: using value %d as minimum\n", driver_data->min);
+        
+        
+        /* Set up backlight device */
         nvidiabl_device->props.max_brightness = FB_BACKLIGHT_LEVELS - 1;
 	nvidiabl_device->props.brightness =
 		nvidiabl_device->ops->get_brightness(nvidiabl_device);
@@ -249,6 +291,9 @@ static int nvidiabl_remove(struct platform_device *pdev)
 static void __exit nvidiabl_exit(void)
 #endif
 {
+        unsigned back = driver_data->restore(driver_data);
+        printk(KERN_INFO "nvidiabl: restore register value %d\n", back);
+        
 	/* Unregister at backlight framework */
 	if (nvidiabl_device)
 		backlight_device_unregister(nvidiabl_device);
@@ -324,13 +369,13 @@ MODULE_LICENSE("GPL");
 MODULE_DEVICE_TABLE(dmi, nvidiabl_dmi_table);
 
 module_param_named(off, off, long, 0644);
-MODULE_PARM_DESC(off, "value to put in the register to disable the backlight");
+MODULE_PARM_DESC(off, "value to put in the register to disable the backlight, negative value is interpreted as percentage of maximum, -101 for default, autodetect otherwise");
 
 module_param_named(min, min, long, 0644);
-MODULE_PARM_DESC(min, "minimum register value for the backlight");
+MODULE_PARM_DESC(min, "minimum register value for the backlight, negative value is interpreted as percentage of maximum, -101 for default, autodetect otherwise");
 
 module_param_named(max, max, long, 0644);
-MODULE_PARM_DESC(max, "maximum register value for the backlight");
+MODULE_PARM_DESC(max, "maximum register value for the backlight, -101 for default, autodetect otherwise");
 
 module_param_named(pci_id, pci_id, ulong, 0644);
 MODULE_PARM_DESC(pci_id, "PCI ID of the Nvidia card - usefull only when not using autodetection and more than one Nvidia PCI device");

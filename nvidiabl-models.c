@@ -41,6 +41,18 @@ static inline unsigned int set_intensity(unsigned int intensity, int off, int mi
  * Implementation for NV4X chips
  * (NV40, NV41, NV43, NV44, NV46, NV47, NV49, NV4B, C51)
  */
+static unsigned nv4x_backup(struct driver_data *dd)
+{
+        dd->backup_value = ioread16(dd->smartdimmer);
+        return dd->backup_value;
+}
+
+static unsigned nv4x_restore(struct driver_data *dd)
+{
+        iowrite16((u16)dd->backup_value, dd->smartdimmer);
+        return dd->backup_value;
+}
+
 static int nv4x_get_intensity(struct backlight_device *bd)
 {
         struct driver_data *dd = bl_get_data(bd);
@@ -76,6 +88,8 @@ static struct driver_data nv4x_driver_data = {
         .off           = 0,
         .min           = 4,
         .max           = 21,
+        .backup        = nv4x_backup,
+        .restore       = nv4x_restore,
         .backlight_ops = {
 #ifdef USE_BACKLIGHT_SUSPEND
                 .options        = BL_CORE_SUSPENDRESUME,
@@ -89,6 +103,18 @@ static struct driver_data nv4x_driver_data = {
  * Implementation for NV5X chips
  * (NV50, G84, G86, G92, G94, G96, GT200)
  */
+static unsigned nv5x_backup(struct driver_data *dd)
+{
+        dd->backup_value = ioread32(dd->smartdimmer);
+        return dd->backup_value;
+}
+
+static unsigned nv5x_restore(struct driver_data *dd)
+{
+        iowrite32(dd->backup_value, dd->smartdimmer);
+        return dd->backup_value;
+}
+
 static int nv5x_get_intensity(struct backlight_device *bd)
 {
         struct driver_data *dd = bl_get_data(bd);
@@ -125,6 +151,8 @@ static struct driver_data nv5x_driver_data = {
         .off           = 0,
         .min           = 50,
         .max           = 1024,
+        .backup        = nv5x_backup,
+        .restore       = nv5x_restore,
         .backlight_ops = {
 #ifdef USE_BACKLIGHT_SUSPEND
                 .options        = BL_CORE_SUSPENDRESUME,

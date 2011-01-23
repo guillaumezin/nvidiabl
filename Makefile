@@ -1,5 +1,5 @@
 TARGET 		:= nvidiabl
-VERSION		:= 0.60
+VERSION		:= 0.61
 RELEASE_NAME	:= $(TARGET)-$(VERSION)
 
 KVER		:= $(shell uname -r)
@@ -66,6 +66,10 @@ release: clean
         done
 	@tar -c $(DISTDIR) | bzip2 -9 > $(RELEASE_NAME).tar.bz2
 	@rm -rf $(DISTDIR)
+
+test: modules
+	@sudo rmmod $(TARGET)
+	@sudo insmod ./$(TARGET).ko
 
 dkms-conf:
 	@echo "DEST_MODULE_LOCATION[0]=\"$(LOC)\"" > dkms.conf

@@ -19,6 +19,13 @@
 #include <linux/pci.h>
 #include <linux/fb.h>
 
+#define NVIDIABL_DEFAULT        -101
+#define NVIDIABL_AUTO           -102
+#define NVIDIABL_UNSET          -103
+
+#define NVIDIABL_AUTO_OFF       0
+#define NVIDIABL_AUTO_MIN       -5
+
 /* Driver private data structure */
 struct driver_data {
         /* PCI region (BAR) the smartdimmer register is in */
@@ -29,7 +36,12 @@ struct driver_data {
         unsigned reg_size;
 
         /* off, min and max value for intensity in register */
-        unsigned off, min, max;
+        int off, min, max;
+        
+        /* register backup and restore */
+        unsigned backup_value;
+        unsigned (*backup)(struct driver_data *);
+        unsigned (*restore)(struct driver_data *);
 
         /* Backlight operations structure */
         struct backlight_ops backlight_ops;
@@ -42,9 +54,9 @@ struct driver_data {
 
 typedef struct {
         unsigned long pci_device_code;
-        long off;
-        long min;
-        long max;  
+        int off;
+        int min;
+        int max;  
 } nvidiabl_descriptor;
 
 #define NVIDIABL_DECLARE_LAPTOP_MODEL(sys_vendor, product_name, pci_device_code, off_value, min_value, max_value) \
