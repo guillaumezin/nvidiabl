@@ -1,5 +1,5 @@
 TARGET 		:= nvidiabl
-VERSION		:= 0.62
+VERSION		:= 0.63
 RELEASE_NAME	:= $(TARGET)-$(VERSION)
 
 KVER		:= $(shell uname -r)
@@ -68,7 +68,7 @@ release: clean
 	@rm -rf $(DISTDIR)
 
 test: modules
-	@sudo rmmod $(TARGET)
+	@if test -d /sys/module/$(TARGET); then sudo rmmod $(TARGET);fi
 	@sudo insmod ./$(TARGET).ko
 
 dkms-conf:
