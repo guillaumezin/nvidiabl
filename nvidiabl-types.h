@@ -19,6 +19,10 @@
 #include <linux/pci.h>
 #include <linux/fb.h>
 
+#define NVIDIABL_STR_1(s) #s
+#define NVIDIABL_STR(s) NVIDIABL_STR_1(s)
+#define NVIDIABL_VERSION_STR NVIDIABL_STR(NVIDIABL_VERSION)
+
 #define NVIDIABL_DEFAULT        -101
 #define NVIDIABL_AUTO           -102
 #define NVIDIABL_UNSET          -103

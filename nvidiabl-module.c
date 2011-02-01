@@ -193,6 +193,8 @@ static int __init nvidiabl_init(void)
 	if (no_pci_devices())
 		return -ENODEV;
 
+	printk(KERN_INFO "nvidiabl: loading driver version " NVIDIABL_VERSION_STR "\n");
+	
 	/* Check DMI whether we need to ignore some device */
 	dmi_check_system(nvidiabl_ignore_table);
         
@@ -341,7 +343,7 @@ static struct platform_device *nvidiabl_platform_device;
 static int __init nvidiabl_init(void)
 {
 	int err;
-
+	
 	err = platform_driver_register(&nvidiabl_driver);
 	if (err)
 		return err;

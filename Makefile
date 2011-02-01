@@ -1,5 +1,5 @@
 TARGET 		:= nvidiabl
-VERSION		:= 0.63
+VERSION		:= 0.64
 RELEASE_NAME	:= $(TARGET)-$(VERSION)
 
 KVER		:= $(shell uname -r)
@@ -22,7 +22,7 @@ ifeq ($(DEBUG),y)
 EXTRA_CFLAGS += -DNVIDIA_BL_DEBUG
 endif
 
-EXTRA_CFLAGS += -DNVIDIA_BL_VERSION=$(VERSION) \
+EXTRA_CFLAGS += -DNVIDIABL_VERSION=$(VERSION) \
 		 -I$(M) \
 		 -I/lib/modules/$(KVER)/include
 

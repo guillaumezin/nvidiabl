@@ -17,11 +17,11 @@
 
 /* Register constants */
 #define NV4X_BL_REGISTER_ADDR                           0x15f2
-#define NV4X_BL_REGISTER_MASK                           0x00FFFFFF
+#define NV4X_BL_REGISTER_MASK                           0x0000001f
 #define NV5X_PDISPLAY_OFFSET                            0x00610000
 #define NV5X_PDISPLAY_SOR0_BRIGHTNESS                   0x0000c084
 #define NV5X_PDIPSLAY_SOR0_BRIGHTNESS_CONTROL_ENABLED   0x80000000
-#define NV5X_PDIPSLAY_SOR0_MASK                         0x00FFFFFF
+#define NV5X_PDIPSLAY_SOR0_MASK                         0x00ffffff
 
 static char *model = "";
 
@@ -69,7 +69,7 @@ static unsigned nv4x_autodetect(struct driver_data *dd, T_NVIDIABL_VAL which)
 static int nv4x_get_intensity(struct backlight_device *bd)
 {
         struct driver_data *dd = bl_get_data(bd);
-        unsigned short intensity = ioread16(dd->smartdimmer) & 0x1f;
+        unsigned short intensity = ioread16(dd->smartdimmer) & NV4X_BL_REGISTER_MASK;
 
         intensity = get_intensity(intensity, dd->off, dd->min, dd->max);
 
@@ -89,7 +89,7 @@ static int nv4x_set_intensity(struct backlight_device *bd)
                 (bd->props.power != FB_BLANK_UNBLANK || bd->props.fb_blank != FB_BLANK_UNBLANK)
         );
         
-        iowrite16((ioread16(dd->smartdimmer) & ~0x1f) | intensity,
+        iowrite16((ioread16(dd->smartdimmer) & ~NV4X_BL_REGISTER_MASK) | intensity,
                   dd->smartdimmer);
         return 0;
 }
@@ -142,8 +142,7 @@ static unsigned nv5x_autodetect(struct driver_data *dd, T_NVIDIABL_VAL which)
 static int nv5x_get_intensity(struct backlight_device *bd)
 {
         struct driver_data *dd = bl_get_data(bd);
-        unsigned intensity = ioread32(dd->smartdimmer) &
-                ~NV5X_PDIPSLAY_SOR0_BRIGHTNESS_CONTROL_ENABLED;
+        unsigned intensity = ioread32(dd->smartdimmer) & NV5X_PDIPSLAY_SOR0_MASK;
 
         intensity = get_intensity(intensity, dd->off, dd->min, dd->max);
 
@@ -163,7 +162,7 @@ static int nv5x_set_intensity(struct backlight_device *bd)
                 (bd->props.power != FB_BLANK_UNBLANK || bd->props.fb_blank != FB_BLANK_UNBLANK)
         );
         
-        iowrite32(intensity | NV5X_PDIPSLAY_SOR0_BRIGHTNESS_CONTROL_ENABLED,
+        iowrite32((ioread32(dd->smartdimmer) & ~NV5X_PDIPSLAY_SOR0_MASK) | intensity | NV5X_PDIPSLAY_SOR0_BRIGHTNESS_CONTROL_ENABLED,
                   dd->smartdimmer);
         return 0;
 }
