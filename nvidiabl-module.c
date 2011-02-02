@@ -232,7 +232,7 @@ static int __init nvidiabl_init(void)
 
 
         back = driver_data->backup(driver_data);
-        printk(KERN_INFO "nvidiabl: backup register value %d\n", back);
+        printk(KERN_INFO "nvidiabl: backup register value 0x%x\n", back);
 
         if (max == NVIDIABL_UNSET)
                 driver_data->max = NVIDIABL_AUTO;
@@ -243,7 +243,7 @@ static int __init nvidiabl_init(void)
                 printk(KERN_INFO "nvidiabl: autodetecting maximum\n");
                 driver_data->max = driver_data->autodetect(driver_data, T_NVIDIABL_MAX);
         }
-        printk(KERN_INFO "nvidiabl: using value %d as maximum\n", driver_data->max);
+        printk(KERN_INFO "nvidiabl: using value 0x%x as maximum\n", driver_data->max);
 
         
         if (off == NVIDIABL_UNSET)
@@ -259,10 +259,10 @@ static int __init nvidiabl_init(void)
         if (driver_data->off < 0) {
                 printk(KERN_INFO "nvidiabl: off is %d%% of maximum\n", -1 * driver_data->off);
                 calc = driver_data->max * driver_data->off;
-                calc /= -100;
+		do_div(calc, -100);
                 driver_data->off = calc;
         }
-        printk(KERN_INFO "nvidiabl: using value %d as off\n", driver_data->off);
+        printk(KERN_INFO "nvidiabl: using value 0x%x as off\n", driver_data->off);
 
 
         if (min == NVIDIABL_UNSET)
@@ -281,7 +281,7 @@ static int __init nvidiabl_init(void)
                 calc /= -100;
                 driver_data->min = calc;
         }
-        printk(KERN_INFO "nvidiabl: using value %d as minimum\n", driver_data->min);
+        printk(KERN_INFO "nvidiabl: using value 0x%x as minimum\n", driver_data->min);
         
         
         /* Set up backlight device */
@@ -299,7 +299,7 @@ static void __exit nvidiabl_exit(void)
 #endif
 {
         unsigned back = driver_data->restore(driver_data);
-        printk(KERN_INFO "nvidiabl: restore register value %d\n", back);
+        printk(KERN_INFO "nvidiabl: restore register value 0x%x\n", back);
         
 	/* Unregister at backlight framework */
 	if (nvidiabl_device)
