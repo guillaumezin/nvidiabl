@@ -22,4 +22,4 @@
  *      you can use PCI_ANY_ID to autodetect GPU
  */
 
-NVIDIABL_IGNORE_LAPTOP_MODEL("Apple Inc.", "MacBook", PCI_ANY_ID),
+/* NVIDIABL_IGNORE_LAPTOP_MODEL("Apple Inc.", "MacBook", PCI_ANY_ID), */

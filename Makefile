@@ -1,5 +1,5 @@
 TARGET 		:= nvidiabl
-VERSION		:= 0.65
+VERSION		:= 0.66
 RELEASE_NAME	:= $(TARGET)-$(VERSION)
 
 KVER		:= $(shell uname -r)
@@ -80,7 +80,8 @@ dkms-conf:
 	@echo "MODULES_CONF[0]=\"# Prevent conflicts with nvidiabl\"" >> dkms.conf
 	@echo "MODULES_CONF[1]=\"blacklist nvidia_bl\"" >> dkms.conf
 	@echo "MODULES_CONF[2]=\"blacklist nvbacklight\"" >> dkms.conf
-	@echo "MODULES_CONF[3]=\"# End of entries added for nvidiabl\"" >> dkms.conf
+	@echo "MODULES_CONF[3]=\"blacklist mbp_nvidia_bl\"" >> dkms.conf
+	@echo "MODULES_CONF[4]=\"# End of entries added for nvidiabl\"" >> dkms.conf
 	@echo "MAKE[0]=\"make -C \$${kernel_source_dir} SUBDIRS=\$${dkms_tree}/\$${PACKAGE_NAME}/\$${PACKAGE_VERSION}/build modules\"" >> dkms.conf
 	@echo "REMAKE_INITRD=\"no\"" >> dkms.conf
 	@echo "AUTOINSTALL=\"yes\"" >> dkms.conf
