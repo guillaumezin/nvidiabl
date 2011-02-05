@@ -1,5 +1,5 @@
 TARGET 		:= nvidiabl
-VERSION		:= 0.66
+VERSION		:= 0.67
 RELEASE_NAME	:= $(TARGET)-$(VERSION)
 
 KVER		:= $(shell uname -r)
@@ -14,9 +14,9 @@ obj-m 		+= $(TARGET).o
 $(TARGET)-objs	:= $(OBJS)
 
 # Comment/uncomment to enable/disable debugging
-DEBUG = y
+DEBUG 		= y
 
-EXTRA_CFLAGS = 
+EXTRA_CFLAGS 	= -Wno-unused-function
 
 ifeq ($(DEBUG),y)
 EXTRA_CFLAGS += -DNVIDIA_BL_DEBUG
@@ -29,7 +29,7 @@ EXTRA_CFLAGS += -DNVIDIABL_VERSION=$(VERSION) \
 default: modules
 
 modules:
-	$(MAKE) -C $(KDIR) M=$(PWD) modules
+	$(MAKE) $(OPTIONS) -C $(KDIR) M=$(PWD) modules
 
 install: $(TARGET).ko
 	install -d $(MODPATH)

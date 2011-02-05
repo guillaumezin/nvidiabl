@@ -22,4 +22,7 @@
  *      you can use PCI_ANY_ID to autodetect GPU
  */
 
-/* NVIDIABL_IGNORE_LAPTOP_MODEL("Apple Inc.", "MacBook", PCI_ANY_ID), */
+/* This driver has no effect on the backlight for the following models */
+NVIDIABL_IGNORE_LAPTOP_MODEL("Apple Inc.", "MacBookPro6,1", PCI_ANY_ID),
+NVIDIABL_IGNORE_LAPTOP_MODEL("Apple Inc.", "MacBookPro6,2", PCI_ANY_ID),
+
