@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# nvidiablctl v0.1
+# nvidiablctl v0.2
 #
 # Copyright (c) 2011, Piotr Karbowski <piotr.karbowski@gmail.com>
 # All rights reserved.
@@ -18,8 +18,8 @@
 #   prior written permission.
 
 backlights_path='/sys/class/backlight/nvidia_backlight'
-max_brightness="$(cat ${backlights_path}/max_brightness)"
-current_brightness="$(cat ${backlights_path}/brightness)"
+max_brightness="$(< ${backlights_path}/max_brightness)"
+current_brightness="$(< ${backlights_path}/actual_brightness)"
 
 adjust_brightness() {
 	if [ "$1" -gt "${max_brightness}" ]; then
