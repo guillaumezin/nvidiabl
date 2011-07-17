@@ -215,6 +215,9 @@ static int __init nvidiabl_init(void)
 	/* Register at backlight framework */
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,34)
         memset(&props, 0, sizeof(struct backlight_properties));
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,39)
+	props.type = BACKLIGHT_RAW;
+#endif
 	nvidiabl_device = backlight_device_register("nvidia_backlight", NULL,
 	                                             driver_data,
 	                                             &driver_data->backlight_ops,

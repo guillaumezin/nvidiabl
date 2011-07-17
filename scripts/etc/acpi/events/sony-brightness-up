@@ -1,0 +1,2 @@
+event=sony/hotkey SNC 00000001 00000011
+action=/etc/acpi/nvidia_backlight_up.sh

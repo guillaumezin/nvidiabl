@@ -137,9 +137,9 @@ sudo modprobe nvidiabl min=50 max=500
 I can change the backlight value from the power settings GUI but my Fn keys are not working:
 ____________________________________________________________________________________________
 
-On https://github.com/guillaumezin/nvidiabl, I attached some ACPI scripts examples that permit on my laptop to use Fn keys to change the backlight settings. This is an ugly workaround (you don't have OSD this way), good practive should be to have a look at the /usr/share/doc/udev/README.keymap.txt.gz and fill a bug report.
+On https://github.com/guillaumezin/nvidiabl/blob/master/scripts, there are bash (in /usr/local/sbin) and ACPI (in /etc) scripts examples that permit on my laptop to use Fn keys to change the backlight settings. This is an ugly workaround (you don't have OSD this way), good practice should be to have a look at the /usr/share/doc/udev/README.keymap.txt.gz and fill a bug report.
 
-There is some intereting scripts here too: http://dev.osource.se/software/obacklight/.
+There is some intereting scripts here too: http://dev.osource.se/software/obacklight.
 
 
 nVidia staff is of course free to ship this driver with theirs!
