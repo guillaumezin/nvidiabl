@@ -321,3 +321,5 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0cb0, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0cb1, nv5x_driver_data),
 /* Quadro FX 1800M (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0cbc, nv5x_driver_data),
+/* GeForce GTX 560M (GF116) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1251, nv5x_driver_data),
