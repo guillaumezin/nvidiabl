@@ -1,5 +1,5 @@
 TARGET 		:= nvidiabl
-VERSION		:= 0.70
+VERSION		:= 0.71
 RELEASE_NAME	:= $(TARGET)-$(VERSION)
 
 KVER		:= $(shell uname -r)
