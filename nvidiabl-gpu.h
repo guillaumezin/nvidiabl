@@ -323,3 +323,5 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0cb1, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0cbc, nv5x_driver_data),
 /* GeForce GTX 560M (GF116) */
 NVIDIABL_DECLARE_GPU_MODEL(0x1251, nv5x_driver_data),
+/* GeForce GT520M ()*/
+NVIDIABL_DECLARE_GPU_MODEL(0x0ded, nv5x_driver_data),
