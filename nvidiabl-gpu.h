@@ -357,6 +357,8 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0df6, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0df7, nv5x_driver_data),
 /* Quadro 1000M (280.13) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0dfa, nv5x_driver_data),
+/* Quadro 2000M (280.13) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0dda, nv5x_driver_data),
 /* Quadro 3000M (280.13) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0e3a, nv5x_driver_data),
 /* Quadro 4000M (280.13) */
