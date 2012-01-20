@@ -18,6 +18,7 @@
 
 #include <linux/pci.h>
 #include <linux/fb.h>
+#include <linux/moduleparam.h>
 
 #define NVIDIABL_STR_1(s) #s
 #define NVIDIABL_STR(s) NVIDIABL_STR_1(s)
