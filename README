@@ -62,6 +62,16 @@ make dkms-install
 Then you can erase the directory where source files have been uncompressed.
 
 
+Create a package:
+_________________
+
+For instance for version 0.72:
+
+sudo dkms mkdeb mktarball --source-only -m nvidiabl -v 0.72
+
+Then the package should be available here: /var/lib/dkms/nvidiabl/0.72/tarball/nvidiabl-0.72-source-only.dkms.tar.gz 
+
+
 Uninstallation (after installation from nvidiabl-x.xx-source-only.dkms.tar.gz file or from source files version 0.59 or newer):
 _______________________________________________________________________________________________________________________________
 
