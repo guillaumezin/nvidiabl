@@ -23,6 +23,8 @@
  */
 
 /* This driver has no effect on the backlight for the following models */
+NVIDIABL_IGNORE_LAPTOP_MODEL("Apple Inc.", "MacBookPro5,1", PCI_ANY_ID),
+NVIDIABL_IGNORE_LAPTOP_MODEL("Apple Inc.", "MacBookPro5,3", PCI_ANY_ID),
 NVIDIABL_IGNORE_LAPTOP_MODEL("Apple Inc.", "MacBookPro6,1", PCI_ANY_ID),
 NVIDIABL_IGNORE_LAPTOP_MODEL("Apple Inc.", "MacBookPro6,2", PCI_ANY_ID),
 
