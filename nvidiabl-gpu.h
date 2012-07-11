@@ -27,8 +27,6 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0099, nv4x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x00c8, nv4x_driver_data),
 /* Geforce Go 6800 Ultra (195.30) */
 NVIDIABL_DECLARE_GPU_MODEL(0x00c9, nv4x_driver_data),
-/* Quadro FX Go 1400 (195.30) */
-NVIDIABL_DECLARE_GPU_MODEL(0x00cc, nv4x_driver_data),
 /* Geforce Go 6600 (195.30) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0144, nv4x_driver_data),
 /* Geforce Go 6600 TE/6200 TE (195.30) */
@@ -37,8 +35,6 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0146, nv4x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0148, nv4x_driver_data),
 /* Geforce Go 6600 GT (195.30) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0149, nv4x_driver_data),
-/* Quadro FX 540M (195.30) */
-NVIDIABL_DECLARE_GPU_MODEL(0x014c, nv4x_driver_data),
 /* Geforce Go 6200 (195.30) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0164, nv4x_driver_data),
 /* Geforce Go 6400 (195.30) */
@@ -55,12 +51,6 @@ NVIDIABL_DECLARE_GPU_MODEL(0x01d7, nv4x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x01d8, nv4x_driver_data),
 /* Geforce Go 7400GS (NvClock) */
 NVIDIABL_DECLARE_GPU_MODEL(0x01d9, nv4x_driver_data),
-/* Quadro NVS 110M (195.30) */
-NVIDIABL_DECLARE_GPU_MODEL(0x01da, nv4x_driver_data),
-/* Quadro NVS 120M (195.30) */
-NVIDIABL_DECLARE_GPU_MODEL(0x01db, nv4x_driver_data),
-/* Quadro FX 350M (195.30) */
-NVIDIABL_DECLARE_GPU_MODEL(0x01dc, nv4x_driver_data),
 /* Geforce 7500 LE (195.30) */
 NVIDIABL_DECLARE_GPU_MODEL(0x01dd, nv4x_driver_data),
 /* NV44M (NvClock) */
@@ -73,24 +63,14 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0247, nv4x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0297, nv4x_driver_data),
 /* Geforce Go 7900 GS (195.30) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0298, nv4x_driver_data),
-/* Geforce Go 7900GTX (NvClock) / Quadro NVS 510M (195.30) */
-NVIDIABL_DECLARE_GPU_MODEL(0x0299, nv4x_driver_data),
-/* Quadro FX 2500M (195.30) */
-NVIDIABL_DECLARE_GPU_MODEL(0x029a, nv4x_driver_data),
-/* Quadro FX 1500M (195.30) */
-NVIDIABL_DECLARE_GPU_MODEL(0x029b, nv4x_driver_data),
 /* Geforce Go 7700 (195.30) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0397, nv4x_driver_data),
 /* Geforce Go 7600 (195.30) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0398, nv4x_driver_data),
 /* Geforce Go 7600 GT (195.30) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0399, nv4x_driver_data),
-/* Quadro NVS 300M (NvClock) */
-NVIDIABL_DECLARE_GPU_MODEL(0x039a, nv4x_driver_data),
 /* Geforce Go 7900SE (NvClock) */
 NVIDIABL_DECLARE_GPU_MODEL(0x039b, nv4x_driver_data),
-/* QuadroFX 550M (NvClock) */
-NVIDIABL_DECLARE_GPU_MODEL(0x039c, nv4x_driver_data),
 /* Geforce 9500M GS (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0405, nv5x_driver_data),
 /* Geforce NB9P-GE (NvClock) */
@@ -101,14 +81,6 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0407, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0408, nv5x_driver_data),
 /* Geforce 8700M GT (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0409, nv5x_driver_data),
-/* Quadro NVS 370M (NvClock) */
-NVIDIABL_DECLARE_GPU_MODEL(0x040a, nv5x_driver_data),
-/* Quadro NVS 320M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x040b, nv5x_driver_data),
-/* Quadro FX 570M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x040c, nv5x_driver_data),
-/* Quadro FX 1600M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x040d, nv5x_driver_data),
 /* Geforce 8600M GS (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0425, nv5x_driver_data),
 /* Geforce 8400M GT (195.36) */
@@ -117,16 +89,6 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0426, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0427, nv5x_driver_data),
 /* Geforce 8400M G (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0428, nv5x_driver_data),
-/* Quadro NVS 140M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x0429, nv5x_driver_data),
-/* Quadro NVS 130M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x042a, nv5x_driver_data),
-/* Quadro NVS 135M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x042b, nv5x_driver_data),
-/* Quadro NVS 135M (NvClock) */
-NVIDIABL_DECLARE_GPU_MODEL(0x042c, nv5x_driver_data),
-/* Quadro FX 360M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x042d, nv5x_driver_data),
 /* Geforce 9300M G (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x042e, nv5x_driver_data),
 /* Geforce 7150M / nForce 630M (195.36) */
@@ -149,14 +111,6 @@ NVIDIABL_DECLARE_GPU_MODEL(0x060f, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0617, nv5x_driver_data),
 /* Geforce GTX 260M (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0618, nv5x_driver_data),
-/* Quadro FX 3600M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x061c, nv5x_driver_data),
-/* Quadro FX 2800M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x061d, nv5x_driver_data),
-/* Quadro FX 3700M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x061e, nv5x_driver_data),
-/* Quadro FX 3800M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x061f, nv5x_driver_data),
 /* Geforce 9800M GTS (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0628, nv5x_driver_data),
 /* Geforce 9700M GTS (195.36) */
@@ -169,8 +123,6 @@ NVIDIABL_DECLARE_GPU_MODEL(0x062c, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0631, nv5x_driver_data),
 /* Geforce GTS 150M (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0632, nv5x_driver_data),
-/* Quadro FX 2700M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x063a, nv5x_driver_data),
 /* Geforce 9600M GT (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0647, nv5x_driver_data),
 /* Geforce 9600M GS (195.36) */
@@ -193,16 +145,8 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0653, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0654, nv5x_driver_data),
 /* Geforce 9650S (NvClock) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0656, nv5x_driver_data),
-/* Quadro FX 380 (NvClock) */
-NVIDIABL_DECLARE_GPU_MODEL(0x0658, nv5x_driver_data),
-/* Quadro FX 580 (NvClock) */
-NVIDIABL_DECLARE_GPU_MODEL(0x0659, nv5x_driver_data),
-/* Quadro FX 1700M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x065a, nv5x_driver_data),
 /* Geforce 9400GT (NvClock) */
 NVIDIABL_DECLARE_GPU_MODEL(0x065b, nv5x_driver_data),
-/* Quadro FX 770M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x065c, nv5x_driver_data),
 /* Geforce GTX 480M (256.53) */
 NVIDIABL_DECLARE_GPU_MODEL(0x06ca, nv5x_driver_data),
 /* Geforce 9300M GS (195.36) */
@@ -211,18 +155,12 @@ NVIDIABL_DECLARE_GPU_MODEL(0x06e5, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x06e8, nv5x_driver_data),
 /* Geforce 9300M GS (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x06e9, nv5x_driver_data),
-/* Quadro NVS 150M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x06ea, nv5x_driver_data),
-/* Quadro NVS 160M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x06eb, nv5x_driver_data),
 /* Geforce G 105M (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x06ec, nv5x_driver_data),
 /* Geforce G 103M (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x06ef, nv5x_driver_data),
 /* Geforce G 105M (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x06f1, nv5x_driver_data),
-/* Quadro FX 370M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x06fb, nv5x_driver_data),
 /* Geforce 9100M G (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0844, nv5x_driver_data),
 /* Geforce 8200M G (195.36) */
@@ -281,8 +219,6 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0a2d, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0a34, nv5x_driver_data),
 /* Geforce GT 325M (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0a35, nv5x_driver_data),
-/* Quadro FX 880M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x0a3c, nv5x_driver_data),
 /* ION (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0a64, nv5x_driver_data),
 /* Geforce G 105M (195.36) */
@@ -311,8 +247,6 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0a74, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0a75, nv5x_driver_data),
 /* Geforce 315M (280.13) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0a7a, nv5x_driver_data),
-/* Quadro FX 380M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x0a7c, nv5x_driver_data),
 /* Geforce GTS 260M (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0ca8, nv5x_driver_data),
 /* Geforce GTS 250M (195.36) */
@@ -323,8 +257,6 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0caf, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0cb0, nv5x_driver_data),
 /* Geforce GTS 360M (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0cb1, nv5x_driver_data),
-/* Quadro FX 1800M (195.36) */
-NVIDIABL_DECLARE_GPU_MODEL(0x0cbc, nv5x_driver_data),
 /* GeForce GT 555M (280.13) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0dcd, nv5x_driver_data),
 /* GeForce GTX 460M (280.13) */
@@ -355,6 +287,129 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0df5, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0df6, nv5x_driver_data),
 /* GeForce GT 520M (280.13) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0df7, nv5x_driver_data),
+/* GeForce GT 470M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0e30, nv5x_driver_data),
+/* GeForce GTX 485M LE (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0e31, nv5x_driver_data),
+/* GeForce GT 640M LE (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0fce, nv5x_driver_data),
+/* GeForce GT 650M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0fd1, nv5x_driver_data),
+/* GeForce GT 640M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0fd2, nv5x_driver_data),
+/* GeForce GT 640M LE (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0fd3, nv5x_driver_data),
+/* GeForce GTX 660M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0fd4, nv5x_driver_data),
+/* GeForce GT 650M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0fd5, nv5x_driver_data),
+/* GeForce GT 640M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0fd8, nv5x_driver_data),
+/* GeForce GTX 660M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0fe8, nv5x_driver_data),
+/* GeForce GT 520M (280.13) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1050, nv5x_driver_data),
+/* GeForce GT 520MX (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1051, nv5x_driver_data),
+/* GeForce GT 520M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1052, nv5x_driver_data),
+/* GeForce 410M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1054, nv5x_driver_data),
+/* GeForce 410M (280.13) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1055, nv5x_driver_data),
+/* NVS 4200M (180.13)*/
+NVIDIABL_DECLARE_GPU_MODEL(0x1056, nv5x_driver_data),
+/* Quadro 5010M (180.13)*/
+NVIDIABL_DECLARE_GPU_MODEL(0x109a, nv5x_driver_data),
+/* GeForce GT 620M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1140, nv5x_driver_data),
+/* GeForce GTX 570M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1210, nv5x_driver_data),
+/* GeForce GTX 580M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1211, nv5x_driver_data),
+/* GeForce GTX 675M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1212, nv5x_driver_data),
+/* GeForce GTX 670M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1213, nv5x_driver_data),
+/* GeForce GT 550M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1246, nv5x_driver_data),
+/* GeForce GT 555M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1247, nv5x_driver_data),
+/* GeForce GT 555M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1248, nv5x_driver_data),
+/* GeForce GT 555M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x124D, nv5x_driver_data),
+/* GeForce GTX 560M (280.13) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1251, nv5x_driver_data),
+
+/* Quadro FX Go 1400 (195.30) */
+NVIDIABL_DECLARE_GPU_MODEL(0x00cc, nv4x_driver_data),
+/* Quadro FX 540M (195.30) */
+NVIDIABL_DECLARE_GPU_MODEL(0x014c, nv4x_driver_data),
+/* Quadro NVS 110M (195.30) */
+NVIDIABL_DECLARE_GPU_MODEL(0x01da, nv4x_driver_data),
+/* Quadro NVS 120M (195.30) */
+NVIDIABL_DECLARE_GPU_MODEL(0x01db, nv4x_driver_data),
+/* Quadro FX 350M (195.30) */
+NVIDIABL_DECLARE_GPU_MODEL(0x01dc, nv4x_driver_data),
+/* Quadro NVS 510M (195.30) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0299, nv4x_driver_data),
+/* Quadro FX 2500M (195.30) */
+NVIDIABL_DECLARE_GPU_MODEL(0x029a, nv4x_driver_data),
+/* Quadro FX 1500M (195.30) */
+NVIDIABL_DECLARE_GPU_MODEL(0x029b, nv4x_driver_data),
+/* Quadro NVS 300M (NvClock) */
+NVIDIABL_DECLARE_GPU_MODEL(0x039a, nv4x_driver_data),
+/* QuadroFX 550M (NvClock) */
+NVIDIABL_DECLARE_GPU_MODEL(0x039c, nv4x_driver_data),
+/* Quadro FX 880M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0a3c, nv5x_driver_data),
+/* Quadro NVS 370M (NvClock) */
+NVIDIABL_DECLARE_GPU_MODEL(0x040a, nv5x_driver_data),
+/* Quadro NVS 320M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x040b, nv5x_driver_data),
+/* Quadro FX 570M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x040c, nv5x_driver_data),
+/* Quadro FX 1600M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x040d, nv5x_driver_data),
+/* Quadro NVS 140M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0429, nv5x_driver_data),
+/* Quadro NVS 130M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x042a, nv5x_driver_data),
+/* Quadro NVS 135M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x042b, nv5x_driver_data),
+/* Quadro NVS 135M (NvClock) */
+NVIDIABL_DECLARE_GPU_MODEL(0x042c, nv5x_driver_data),
+/* Quadro FX 360M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x042d, nv5x_driver_data),
+/* Quadro FX 3600M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x061c, nv5x_driver_data),
+/* Quadro FX 2800M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x061d, nv5x_driver_data),
+/* Quadro FX 3700M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x061e, nv5x_driver_data),
+/* Quadro FX 3800M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x061f, nv5x_driver_data),
+/* Quadro FX 2700M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x063a, nv5x_driver_data),
+/* Quadro FX 380 (NvClock) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0658, nv5x_driver_data),
+/* Quadro FX 580 (NvClock) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0659, nv5x_driver_data),
+/* Quadro FX 1700M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x065a, nv5x_driver_data),
+/* Quadro FX 770M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x065c, nv5x_driver_data),
+/* Quadro NVS 150M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x06ea, nv5x_driver_data),
+/* Quadro NVS 160M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x06eb, nv5x_driver_data),
+/* Quadro FX 370M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x06fb, nv5x_driver_data),
+/* Quadro FX 380M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0a7c, nv5x_driver_data),
+/* Quadro FX 1800M (195.36) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0cbc, nv5x_driver_data),
 /* Quadro 1000M (280.13) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0dfa, nv5x_driver_data),
 /* Quadro 2000M (280.13) */
@@ -363,17 +418,9 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0dda, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0e3a, nv5x_driver_data),
 /* Quadro 4000M (280.13) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0e3b, nv5x_driver_data),
-/* GeForce GT 520M (280.13) */
-NVIDIABL_DECLARE_GPU_MODEL(0x1050, nv5x_driver_data),
-/* GeForce 410M (280.13) */
-NVIDIABL_DECLARE_GPU_MODEL(0x1055, nv5x_driver_data),
-/* NVS 4200M (180.13)*/
+/* NVS 4200M (295.59) */
 NVIDIABL_DECLARE_GPU_MODEL(0x1056, nv5x_driver_data),
-/* Quadro 5010M (180.13)*/
-NVIDIABL_DECLARE_GPU_MODEL(0x109a, nv5x_driver_data),
-/* GeForce GT 570M (280.13) */
-NVIDIABL_DECLARE_GPU_MODEL(0x1210, nv5x_driver_data),
-/* GeForce GT 580M (280.13) */
-NVIDIABL_DECLARE_GPU_MODEL(0x1211, nv5x_driver_data),
-/* GeForce GTX 560M (280.13) */
-NVIDIABL_DECLARE_GPU_MODEL(0x1251, nv5x_driver_data),
+/* NVS 4200M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x1057, nv5x_driver_data),
+/* Quadro 5010M (295.59) */
+NVIDIABL_DECLARE_GPU_MODEL(0x109A, nv5x_driver_data),
