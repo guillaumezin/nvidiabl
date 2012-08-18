@@ -152,6 +152,22 @@ On https://github.com/guillaumezin/nvidiabl/blob/master/scripts, there are bash 
 There is some intereting scripts here too: http://dev.osource.se/software/obacklight.
 
 
+Redirect brightness control Fn keys on Lenovo's Thinkpads
+_________________________________________________________
+
+In order to redirect the brightness control Fn keys to nvidiabl you have to disable the brightness feature of the thinkpad acpi module. Simple create the file /etc/modprobe.d/thinkpad.conf and add the line
+
+  options thinkpad_acpi brightness_enable=0
+
+Then type:
+
+sudo rmmod thinkpad_acpi
+sudo modprobe nividabl
+sudo modprobel thinkpad_acpi
+
+Instead of a modprobe option you may reconfigure the boot loader and add thinkpad_acpi.brightness_enable=0 to the command line.
+
+
 nVidia staff is of course free to ship this driver with theirs!
 
 Guillaume
