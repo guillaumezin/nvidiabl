@@ -159,7 +159,7 @@ static int nvidiabl_map_smartdimmer(struct driver_data *dd)
 	if (!dd->smartdimmer)
 		return -ENXIO;
 
-        //printk(KERN_DEBUG "nvidiabl: smartdimmer register at address 0x%lx mapped at address 0x%p\n", reg_addr, dd->smartdimmer);
+        printk(KERN_DEBUG "nvidiabl: smartdimmer register at address 0x%lx mapped at address 0x%p\n", reg_addr, dd->smartdimmer);
 
 	return 0;
 }
@@ -261,8 +261,8 @@ static int __init nvidiabl_init(void)
         
         if (driver_data->off < 0) {
                 printk(KERN_INFO "nvidiabl: off is %d%% of maximum\n", -1 * driver_data->off);
-                calc = driver_data->max * driver_data->off;
-		do_div(calc, -100);
+                calc = driver_data->max * (-1 * driver_data->off);
+                do_div(calc, 100);
                 driver_data->off = calc;
         }
         printk(KERN_INFO "nvidiabl: using value 0x%x as off\n", driver_data->off);
@@ -280,8 +280,8 @@ static int __init nvidiabl_init(void)
         
         if (driver_data->min < 0) {
                 printk(KERN_INFO "nvidiabl: minimum is %d%% of maximum\n", -1 * driver_data->min);
-                calc = driver_data->max * driver_data->min;
-		do_div(calc, -100);
+                calc = driver_data->max * (-1 * driver_data->min);
+                do_div(calc, 100);
                 driver_data->min = calc;
         }
         printk(KERN_INFO "nvidiabl: using value 0x%x as minimum\n", driver_data->min);
