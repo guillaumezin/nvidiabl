@@ -16,8 +16,8 @@
 #include "nvidiabl-models.h"
 
 /* Register constants */
-#define NV4X_BL_REGISTER_ADDR                           0x15f2
-#define NV4X_BL_REGISTER_MASK                           0x0000001f
+#define NV4X_BL_REGISTER_ADDR                           0x000015f0
+#define NV4X_BL_REGISTER_MASK                           0x001f0000
 #define NV5X_PDISPLAY_OFFSET                            0x00610000
 #define NV5X_PDISPLAY_SOR0_BRIGHTNESS                   0x0000c084
 #define NV5X_PDIPSLAY_SOR0_BRIGHTNESS_CONTROL_ENABLED   0x80000000
@@ -46,13 +46,13 @@ static inline unsigned int set_intensity(unsigned int intensity, int off, int mi
  */
 static unsigned nv4x_backup(struct driver_data *dd)
 {
-        dd->backup_value = ioread16(dd->smartdimmer);
+        dd->backup_value = ioread32(dd->smartdimmer);
         return dd->backup_value;
 }
 
 static unsigned nv4x_restore(struct driver_data *dd)
 {
-        iowrite16((u16)dd->backup_value, dd->smartdimmer);
+        iowrite32(dd->backup_value, dd->smartdimmer);
         return dd->backup_value;
 }
 
@@ -62,14 +62,14 @@ static unsigned nv4x_autodetect(struct driver_data *dd, T_NVIDIABL_VAL which)
         switch(which) {
                   case T_NVIDIABL_OFF: return NVIDIABL_AUTO_OFF;
                   case T_NVIDIABL_MIN: return NVIDIABL_AUTO_MIN;
-                  default: return dd->backup_value & NV4X_BL_REGISTER_MASK;
+                  default: return (dd->backup_value & NV4X_BL_REGISTER_MASK) >> 16;
         }
 }
 
 static int nv4x_get_intensity(struct backlight_device *bd)
 {
         struct driver_data *dd = bl_get_data(bd);
-        unsigned short intensity = ioread16(dd->smartdimmer) & NV4X_BL_REGISTER_MASK;
+        unsigned short intensity = (ioread32(dd->smartdimmer) & NV4X_BL_REGISTER_MASK) >> 16;
 
         intensity = get_intensity(intensity, dd->off, dd->min, dd->max);
 
@@ -89,7 +89,7 @@ static int nv4x_set_intensity(struct backlight_device *bd)
                 (bd->props.power != FB_BLANK_UNBLANK || bd->props.fb_blank != FB_BLANK_UNBLANK)
         );
         
-        iowrite16((ioread16(dd->smartdimmer) & ~NV4X_BL_REGISTER_MASK) | intensity,
+        iowrite32((ioread32(dd->smartdimmer) & ~NV4X_BL_REGISTER_MASK) | (intensity << 16),
                   dd->smartdimmer);
         return 0;
 }
@@ -97,10 +97,10 @@ static int nv4x_set_intensity(struct backlight_device *bd)
 static struct driver_data nv4x_driver_data = {
         .bar           = 0,
         .reg_offset    = NV4X_BL_REGISTER_ADDR,
-        .reg_size      = 2,
+        .reg_size      = 4,
         .off           = 0,
         .min           = 4,
-        .max           = 21,
+        .max           = 31,
         .backup        = nv4x_backup,
         .restore       = nv4x_restore,
         .autodetect    = nv4x_autodetect,
