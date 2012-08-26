@@ -50,8 +50,8 @@ static unsigned long pci_id = PCI_ANY_ID;
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,39)
 /*
- * first element of bl_type will receive the user's module parameter
- * which will be matched against the other elements. Their indexes match the definitions
+ * bl_type will receive the user's module parameter which will be matched against
+ * the bl_types[] elements. Their indexes match the definitions
  * of 'enum backlight_type' in linux/backlight.h, making translating string into
  * enum value easy to do.
  */
