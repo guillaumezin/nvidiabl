@@ -55,9 +55,21 @@ static unsigned long pci_id = PCI_ANY_ID;
  * of 'enum backlight_type' in linux/backlight.h, making translating string into
  * enum value easy to do.
  */
-static const char const *bl_types[] = { "", "raw", "platform", "firmware" };
-static char bl_type[10];
-module_param_string(type, bl_type, 10, 0644);
+#define BL_TYPE_SIZE 	10
+
+struct backlight_type_id {
+	char id[BL_TYPE_SIZE];
+	enum backlight_type type;
+};
+
+static const struct backlight_type_id backlight_type_ids[] = { 
+	{ "raw", BACKLIGHT_RAW },
+	{ "platform", BACKLIGHT_PLATFORM },
+	{ "firmware", BACKLIGHT_FIRMWARE }
+};
+  
+static char bl_type[BL_TYPE_SIZE]= "raw";
+module_param_string(type, bl_type, BL_TYPE_SIZE, 0644);
 MODULE_PARM_DESC(type, "Backlight type (raw|platform|firmware) default is raw");
 #endif
 
@@ -195,7 +207,8 @@ static int nvidiabl_probe(struct platform_device *pdev)
 static int __init nvidiabl_init(void)
 #endif
 {
-	int err; 
+	int err;
+	int iii;
         unsigned back;
         s64 calc;
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,34)
@@ -229,16 +242,13 @@ static int __init nvidiabl_init(void)
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,34)
         memset(&props, 0, sizeof(struct backlight_properties));
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,39)
-	{
-		char *p, *q;
-		props.type = BACKLIGHT_TYPE_MAX-1;
-		/* if the parameter string doesn't match type will = 1 a.k.a. BACKLIGHT_RAW */
-		for (p = bl_type, q = (char *)bl_types[props.type]; props.type >= 1; props.type--)
-			while (*p++ == *q++)
-				if (*p == 0 && *q == 0)
-					goto props;
+	
+	for (iii = 0 ; iii < sizeof(backlight_type_ids) ; iii++) {
+		if (strnicmp(bl_type, backlight_type_ids[iii].id, sizeof(bl_type)) == 0) {
+			props.type = backlight_type_ids[iii].type;
+			printk(KERN_INFO "nvidiabl: backlight type is %s\n", backlight_type_ids[iii].id);
+		}
 	}
-	props:
 #endif
 	nvidiabl_device = backlight_device_register("nvidia_backlight", NULL,
 	                                             driver_data,
