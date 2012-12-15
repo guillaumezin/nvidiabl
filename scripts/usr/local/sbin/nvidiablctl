@@ -50,6 +50,9 @@ printhelp() {
 
 	${name} set <n>
 		set brightness to <n>
+
+	${name} get
+		get brightness value
 "
 }
 
@@ -70,8 +73,11 @@ case "$1" in
 		if [ -n "$2" ] && [[ "$2" =~ ^[0-9]+$ ]]; then
 			adjust_brightness "$2"
 		else
-			echo "set need numeric second argument."; exit 1
+			echo "set needs numeric second argument."; exit 1
 		fi
+	;;
+	get)
+		echo ${current_brightness}
 	;;
 	*)
 		printhelp; exit 1
