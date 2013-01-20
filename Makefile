@@ -98,11 +98,9 @@ dkms-install: clean dkms-conf
 
 dkms-release:
 	sudo dkms mkdeb mktarball --source-only -m $(TARGET) -v $(VERSION)
-	git rm install/deb/*
-	cp /var/lib/dkms/nvidiabl/0.81/deb/*.deb install/deb
+	cp /var/lib/dkms/nvidiabl/$(VERSION)/deb/*.deb install/deb
 	git add install/deb/*
-	git rm install/tarball/*
-	cp /var/lib/dkms/nvidiabl/0.81/tarball/*.tar.gz install/tarball
+	cp /var/lib/dkms/nvidiabl/$(VERSION)/tarball/*.tar.gz install/tarball
 	git add install/tarball/*
 	git commit *
 	git push
