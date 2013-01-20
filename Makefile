@@ -102,7 +102,7 @@ dkms-release:
 	cp /var/lib/dkms/nvidiabl/0.81/deb/*.deb install/deb
 	git add install/deb/*
 	git rm install/tarball/*
-	cp /var/lib/dkms/nvidiabl/0.81/tarball/*.deb install/tarball
+	cp /var/lib/dkms/nvidiabl/0.81/tarball/*.tar.gz install/tarball
 	git add install/tarball/*
 	git commit *
 	git push
