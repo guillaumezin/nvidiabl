@@ -46,6 +46,7 @@ static unsigned long nvidiabl_ignore_device = 0;
 static long off = NVIDIABL_UNSET;
 static long min = NVIDIABL_UNSET;
 static long max = NVIDIABL_UNSET;
+static long screen_type = NVIDIABL_UNSET;
 static unsigned long pci_id = PCI_ANY_ID;
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,39)
@@ -111,6 +112,8 @@ static int nvidiabl_dmi_match(const struct dmi_system_id *id)
                 min = desc->min;
         if (max == NVIDIABL_UNSET)
                 max = desc->max;
+	if (screen_type == NVIDIABL_UNSET)
+		screen_type = desc->screen_type;
         return 1;
 }
 
@@ -160,41 +163,6 @@ static int nvidiabl_find_device(struct driver_data **dd, unsigned pci_device, un
 	return -ENODEV;
 }
 
-static int nvidiabl_map_smartdimmer(struct driver_data *dd)
-{
-	/* Get resource properties */
-	const unsigned long bar_start = pci_resource_start(dd->dev, dd->bar),
-			    bar_end   = pci_resource_end(dd->dev, dd->bar),
-			    bar_flags = pci_resource_flags(dd->dev, dd->bar);
-	/* Calculate register address */
-	const unsigned long reg_addr  = bar_start + dd->reg_offset;
-
-	/* Sanity check 1: Should be a memory region containing registers */
-	if (!(bar_flags & IORESOURCE_MEM))
-		return -ENODEV;
-	if (bar_flags & IORESOURCE_PREFETCH)
-		return -ENODEV;
-
-	/* Sanity check 2: Address should not exceed the PCI BAR */
-	if (reg_addr + dd->reg_size - 1 > bar_end)
-		return -ENODEV;
-
-	/* Now really map (The address need not be page-aligned.) */
-	dd->smartdimmer = ioremap_nocache(reg_addr, dd->reg_size);
-	if (!dd->smartdimmer)
-		return -ENXIO;
-
-        printk(KERN_DEBUG "nvidiabl: smartdimmer register at address 0x%lx mapped at address 0x%p\n", reg_addr, dd->smartdimmer);
-
-	return 0;
-}
-
-static void nvidiabl_unmap_smartdimmer(struct driver_data *dd)
-{
-	iounmap(dd->smartdimmer);
-	dd->smartdimmer = NULL;
-}
-
 /*
  * Driver implementation
  */
@@ -209,7 +177,6 @@ static int __init nvidiabl_init(void)
 {
 	int err;
 	int iii;
-        unsigned back;
         s64 calc;
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,34)
         struct backlight_properties props;
@@ -232,9 +199,12 @@ static int __init nvidiabl_init(void)
                 return err;
         
         nvidiabl_force_model(&driver_data);
-        
+
+        if ((screen_type != NVIDIABL_DEFAULT) && (screen_type != NVIDIABL_UNSET))
+                driver_data->screen_type = screen_type;
+	
         /* Map smartdimmer */
-	err = nvidiabl_map_smartdimmer(driver_data);
+	err = driver_data->map(driver_data);
 	if (err)
 		return err;
         
@@ -261,17 +231,13 @@ static int __init nvidiabl_init(void)
 #endif
                                                      
 	if (IS_ERR(nvidiabl_device)) {
-		nvidiabl_unmap_smartdimmer(driver_data);
+		driver_data->unmap(driver_data);
 		return PTR_ERR(nvidiabl_device);
 	}
 
+        driver_data->backup(driver_data);
 
-        back = driver_data->backup(driver_data);
-        printk(KERN_INFO "nvidiabl: backup register value 0x%x\n", back);
-
-        if (max == NVIDIABL_UNSET)
-                driver_data->max = NVIDIABL_AUTO;
-        else if (max != NVIDIABL_DEFAULT)
+        if ((max != NVIDIABL_DEFAULT) && (max != NVIDIABL_UNSET))
                 driver_data->max = max;
           
         if (driver_data->max == NVIDIABL_AUTO) {
@@ -281,9 +247,7 @@ static int __init nvidiabl_init(void)
         printk(KERN_INFO "nvidiabl: using value 0x%x as maximum\n", driver_data->max);
 
         
-        if (off == NVIDIABL_UNSET)
-                driver_data->off = NVIDIABL_AUTO;
-        else if (off != NVIDIABL_DEFAULT)
+        if ((off != NVIDIABL_DEFAULT) && (off != NVIDIABL_UNSET))
                 driver_data->off = off;
 
         if (driver_data->off == NVIDIABL_AUTO) {
@@ -300,9 +264,7 @@ static int __init nvidiabl_init(void)
         printk(KERN_INFO "nvidiabl: using value 0x%x as off\n", driver_data->off);
 
 
-        if (min == NVIDIABL_UNSET)
-                driver_data->min = NVIDIABL_AUTO;
-        else if (min != NVIDIABL_DEFAULT)
+        if ((min != NVIDIABL_DEFAULT) && (min != NVIDIABL_UNSET))
                 driver_data->min = min;
 
         if (driver_data->min == NVIDIABL_AUTO) {
@@ -333,16 +295,14 @@ static int nvidiabl_remove(struct platform_device *pdev)
 static void __exit nvidiabl_exit(void)
 #endif
 {
-        unsigned back = driver_data->restore(driver_data);
-        printk(KERN_INFO "nvidiabl: restore register value 0x%x\n", back);
+        driver_data->restore(driver_data);
         
 	/* Unregister at backlight framework */
 	if (nvidiabl_device)
 		backlight_device_unregister(nvidiabl_device);
 
 	/* Unmap smartdimmer */
-	if (driver_data->smartdimmer)
-		nvidiabl_unmap_smartdimmer(driver_data);
+	driver_data->unmap(driver_data);
 
 	/* Release PCI device */
 	if (driver_data->dev)
@@ -418,6 +378,9 @@ MODULE_PARM_DESC(min, "minimum register value for the backlight, negative value 
 
 module_param_named(max, max, long, 0644);
 MODULE_PARM_DESC(max, "maximum register value for the backlight, -101 for default, autodetect otherwise");
+
+module_param_named(screen_type, screen_type, long, 0644);
+MODULE_PARM_DESC(max, "screen type, 0 for default, 1 for auto, 2 to force LVDS, 3 to force EPD");
 
 module_param_named(pci_id, pci_id, ulong, 0644);
 MODULE_PARM_DESC(pci_id, "PCI ID of the Nvidia card - usefull only when not using autodetection and more than one Nvidia PCI device");

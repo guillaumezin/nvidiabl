@@ -28,6 +28,11 @@
 #define NVIDIABL_AUTO           -102
 #define NVIDIABL_UNSET          -103
 
+#define NVIDIABL_SC_DEFAULT     0
+#define NVIDIABL_SC_AUTO        1
+#define NVIDIABL_SC_LVDS        2
+#define NVIDIABL_SC_EPD         3
+
 #define NVIDIABL_AUTO_OFF       0
 #define NVIDIABL_AUTO_MIN       -5
 
@@ -38,18 +43,25 @@ struct driver_data {
         /* PCI region (BAR) the smartdimmer register is in */
         unsigned bar;
         /* Register offset into this region */
-        unsigned long reg_offset;
+        unsigned long reg_offset1;
+        unsigned long reg_offset2;
         /* Register size in byte */
         unsigned reg_size;
 
         /* off, min and max value for intensity in register */
         int off, min, max;
+	
+	/* depending on screen_type, we may have to choose which register to read and write */
+	int screen_type;
         
         /* register backup and restore */
         unsigned backup_value;
-        unsigned (*backup)(struct driver_data *);
-        unsigned (*restore)(struct driver_data *);
+        void (*backup)(struct driver_data *);
+        void (*restore)(struct driver_data *);
         unsigned (*autodetect)(struct driver_data *, T_NVIDIABL_VAL which);
+	
+	int (*map)(struct driver_data *dd);
+	void (*unmap)(struct driver_data *dd);
 
         /* Backlight operations structure */
         struct backlight_ops backlight_ops;
@@ -62,12 +74,13 @@ struct driver_data {
 
 typedef struct {
         unsigned long pci_device_code;
+	int screen_type;
         int off;
         int min;
         int max;  
 } nvidiabl_descriptor;
 
-#define NVIDIABL_DECLARE_LAPTOP_MODEL(sys_vendor, product_name, pci_device_code, off_value, min_value, max_value) \
+#define NVIDIABL_DECLARE_LAPTOP_MODEL(sys_vendor, product_name, pci_device_code, screen_type, off_value, min_value, max_value) \
     {\
         .callback       = &nvidiabl_dmi_match,\
         .ident          = sys_vendor " - " product_name,\
@@ -75,7 +88,7 @@ typedef struct {
             DMI_MATCH(DMI_SYS_VENDOR, sys_vendor),\
             DMI_MATCH(DMI_PRODUCT_NAME, product_name),\
         },\
-        .driver_data    = (void *)&(nvidiabl_descriptor){pci_device_code, off_value, min_value, max_value} \
+        .driver_data    = (void *)&(nvidiabl_descriptor){pci_device_code, screen_type, off_value, min_value, max_value} \
 }
 
 #define NVIDIABL_IGNORE_LAPTOP_MODEL(sys_vendor, product_name, pci_device_code) \

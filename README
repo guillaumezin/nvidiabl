@@ -132,11 +132,14 @@ MODULE_PARM_DESC(min, "minimum register value for the backlight, negative value 
 module_param_named(max, max, long, 0644);
 MODULE_PARM_DESC(max, "maximum register value for the backlight, -101 for default, autodetect otherwise");
 
+module_param_named(screen_type, screen_type, long, 0644);
+MODULE_PARM_DESC(max, "screen type, 0 for default, 1 for auto, 2 to force LVDS, 3 to force EPD");
+
 module_param_named(pci_id, pci_id, ulong, 0644);
 MODULE_PARM_DESC(pci_id, "PCI ID of the Nvidia card - usefull only when not using autodetection and more than one Nvidia PCI device");
 
 module_param_named(model, model, charp, 0644);
-MODULE_PARM_DESC(model, "backlight model, must be empty for autodetection, nv4x or nv5x");
+MODULE_PARM_DESC(model, "backlight model, must be empty for autodetection, nv4x, or nv5x");
 
 For instance, if you want to test 50 as min value and 500 as max value, type:
 
