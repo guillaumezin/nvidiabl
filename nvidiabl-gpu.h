@@ -426,6 +426,8 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0ffc, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x1056, nv5x_driver_data),
 /* NVS 4200M (295.59) */
 NVIDIABL_DECLARE_GPU_MODEL(0x1057, nv5x_driver_data),
+/* NVS 5200M (313.30) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0dfc, nv5x_driver_data),
 /* Quadro 5010M (295.59) */
 NVIDIABL_DECLARE_GPU_MODEL(0x109A, nv5x_driver_data),
 /* Quadro K5000M (304.43) */
@@ -434,4 +436,3 @@ NVIDIABL_DECLARE_GPU_MODEL(0x11bc, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x11bd, nv5x_driver_data),
 /* Quadro K3000M (304.43) */
 NVIDIABL_DECLARE_GPU_MODEL(0x11be, nv5x_driver_data),
-
