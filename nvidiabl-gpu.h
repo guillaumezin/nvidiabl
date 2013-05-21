@@ -341,6 +341,8 @@ NVIDIABL_DECLARE_GPU_MODEL(0x1248, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x124D, nv5x_driver_data),
 /* GeForce GTX 560M (280.13) */
 NVIDIABL_DECLARE_GPU_MODEL(0x1251, nv5x_driver_data),
+/* GeForce GTX 750M (319.17) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0fe4, nv5x_driver_data),
 
 /* Quadro FX Go 1400 (195.30) */
 NVIDIABL_DECLARE_GPU_MODEL(0x00cc, nv4x_driver_data),
