@@ -26,19 +26,23 @@
 
 static char *model = "";
 
+static inline int div_rounded (int a, int b) {
+        return (a % b < b / 2) ? (a / b) : (a / b + 1);
+}
+
 static inline unsigned int get_intensity(unsigned int reg_value, int off, int min, int max) {
        
         if (reg_value == off)
                 return 0;
         else
-                return (reg_value - min) * (FB_BACKLIGHT_LEVELS - 1) / (max - min);
+                return div_rounded((reg_value - min) * (FB_BACKLIGHT_LEVELS - 1), max - min);
 }
 
 static inline unsigned int set_intensity(unsigned int intensity, int off, int min, int max, int forceoff) {
         if (forceoff)
                 return off;
         else
-                return min + (intensity * (max - min) / (FB_BACKLIGHT_LEVELS - 1));
+                return min + div_rounded(intensity * (max - min), FB_BACKLIGHT_LEVELS - 1);
 }
 
 /*
