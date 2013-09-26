@@ -313,6 +313,8 @@ NVIDIABL_DECLARE_GPU_MODEL(0x1050, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x1051, nv5x_driver_data),
 /* GeForce GT 520M (295.59) */
 NVIDIABL_DECLARE_GPU_MODEL(0x1052, nv5x_driver_data),
+/* GeForce GT 750M (???.??) */
+NVIDIABL_DECLARE_GPU_MODEL(0x0fe4, nv5x_driver_data),
 /* GeForce 410M (295.59) */
 NVIDIABL_DECLARE_GPU_MODEL(0x1054, nv5x_driver_data),
 /* GeForce 410M (280.13) */
