@@ -141,6 +141,9 @@ MODULE_PARM_DESC(pci_id, "PCI ID of the Nvidia card - usefull only when not usin
 module_param_named(model, model, charp, 0644);
 MODULE_PARM_DESC(model, "backlight model, must be empty for autodetection, nv4x, or nv5x");
 
+module_param_string(type, bl_type, BL_TYPE_SIZE, 0644);
+MODULE_PARM_DESC(type, "Backlight type (raw|platform|firmware) default is raw");
+
 For instance, if you want to test 50 as min value and 500 as max value, type:
 
 sudo modprobe -r nvidiabl
