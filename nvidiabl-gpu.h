@@ -438,4 +438,5 @@ NVIDIABL_DECLARE_GPU_MODEL(0x11bc, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x11bd, nv5x_driver_data),
 /* Quadro K3000M (304.43) */
 NVIDIABL_DECLARE_GPU_MODEL(0x11be, nv5x_driver_data),
-
+/* GeForce GTX 670MX (???.??) */
+NVIDIABL_DECLARE_GPU_MODEL(0x11a1, nv5x_driver_data),
