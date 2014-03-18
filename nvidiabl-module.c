@@ -237,8 +237,12 @@ static int __init nvidiabl_init(void)
 
         driver_data->backup(driver_data);
 
-        if ((max != NVIDIABL_DEFAULT) && (max != NVIDIABL_UNSET))
+        if (max == NVIDIABL_UNSET) {
+		driver_data->max = NVIDIABL_AUTO;
+	}
+	else if (max != NVIDIABL_DEFAULT) {
                 driver_data->max = max;
+	}
           
         if (driver_data->max == NVIDIABL_AUTO) {
                 printk(KERN_INFO "nvidiabl: autodetecting maximum\n");
@@ -247,8 +251,12 @@ static int __init nvidiabl_init(void)
         printk(KERN_INFO "nvidiabl: using value 0x%x as maximum\n", driver_data->max);
 
         
-        if ((off != NVIDIABL_DEFAULT) && (off != NVIDIABL_UNSET))
+	if (off == NVIDIABL_UNSET) {
+		driver_data->off = NVIDIABL_AUTO;
+	}
+	else if (off != NVIDIABL_DEFAULT) {
                 driver_data->off = off;
+	} 
 
         if (driver_data->off == NVIDIABL_AUTO) {
                 printk(KERN_INFO "nvidiabl: autodetecting off\n");
@@ -264,8 +272,12 @@ static int __init nvidiabl_init(void)
         printk(KERN_INFO "nvidiabl: using value 0x%x as off\n", driver_data->off);
 
 
-        if ((min != NVIDIABL_DEFAULT) && (min != NVIDIABL_UNSET))
+        if (min == NVIDIABL_UNSET) {
+                driver_data->min = NVIDIABL_AUTO;
+        } 
+        else if (min != NVIDIABL_DEFAULT) {
                 driver_data->min = min;
+        }
 
         if (driver_data->min == NVIDIABL_AUTO) {
                 printk(KERN_INFO "nvidiabl: autodetecting minimum\n");
