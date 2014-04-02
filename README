@@ -198,7 +198,7 @@ Then type:
 
 sudo rmmod thinkpad_acpi
 sudo modprobe nividabl
-sudo modprobel thinkpad_acpi
+sudo modprobe thinkpad_acpi
 
 Instead of a modprobe option you may reconfigure the boot loader and add
 thinkpad_acpi.brightness_enable=0 to the command line.
