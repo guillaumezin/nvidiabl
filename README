@@ -1,6 +1,11 @@
-I wrote a little Linux driver based on Andy Wingo's work (http://wingolog.org/pub/nvbacklight-0.1.tar.bz2) and MacTel Team (https://launchpad.net/~mactel-support) that enables the control of laptop backlight connected to NVIDIA chip using the /sys/class/backlight interface.
-Kubuntu 9.10 for instance uses this interface to control the backlight from powerdevil.
-It is tested with a Sony AW11M/H laptop (Nvidia 9300M GS). Other users successfully tested it on other laptops (have a look at the nvidiabl-laptops.h file).
+I wrote a little Linux driver based on Andy Wingo's work
+(http://wingolog.org/pub/nvbacklight-0.1.tar.bz2) and MacTel Team
+(https://launchpad.net/~mactel-support) that enables the control of laptop backlight connected
+to NVIDIA chip using the /sys/class/backlight interface.
+
+Kubuntu 9.10 for instance uses this interface to control the backlight from powerdevil. It is
+tested with a Sony AW11M/H laptop (Nvidia 9300M GS). Other users successfully tested it on
+other laptops (have a look at the nvidiabl-laptops.h file).
 
 
 Installation from nvidiabl-dkms_xxxx_all.deb file (Debian and distributions based on it):
@@ -39,11 +44,13 @@ ________________________________________________________________________________
 cd /usr/src/nvidiabl-x.xx
 make dkms-remove
 
-Where x.xx is the nvidiabl module version. To know what version are installed on your system, type:
+Where x.xx is the nvidiabl module version. To know what version are installed on your system,
+type:
 
 dkms status
 
-If nvidiabl is the last module to use DKMS, you can remove the DKMS package, for instance with Ubuntu, type:
+If nvidiabl is the last module to use DKMS, you can remove the DKMS package, for instance with
+Ubuntu, type:
 
 sudo aptitude remove dkms
 
@@ -69,37 +76,44 @@ For instance for version 0.72:
 
 sudo dkms mkdeb mktarball --source-only -m nvidiabl -v 0.72
 
-Then the package should be available here: /var/lib/dkms/nvidiabl/0.72/tarball/nvidiabl-0.72-source-only.dkms.tar.gz 
+Then the package should be available here:
+/var/lib/dkms/nvidiabl/0.72/tarball/nvidiabl-0.72-source-only.dkms.tar.gz
 
 
-Uninstallation (after installation from nvidiabl-x.xx-source-only.dkms.tar.gz file or from source files version 0.59 or newer):
-_______________________________________________________________________________________________________________________________
+Uninstallation (after installation from nvidiabl-x.xx-source-only.dkms.tar.gz file or from
+source files version 0.59 or newer):
+__________________________________________________________________________________________
 
 cd /usr/src/nvidiabl-x.xx
 make dkms-remove
 
-Where x.xx is the nvidiabl module version. To know what versions are installed on your system, type:
+Where x.xx is the nvidiabl module version. To know what versions are installed on your system,
+type:
 
 dkms status
 
-If nvidiabl is the last module to use DKMS, you can remove the DKMS package, for instance with Ubuntu, type:
+If nvidiabl is the last module to use DKMS, you can remove the DKMS package, for instance with
+Ubuntu, type:
 
 sudo aptitude remove dkms
 
 
-Uninstallation (after installation from source files or from nvidiabl-x.xx-source-only.dkms.tar.gz for version 0.58 or older):
-______________________________________________________________________________________________________________________________
+Uninstallation (after installation from source files or from
+nvidiabl-x.xx-source-only.dkms.tar.gz for version 0.58 or older):
+_________________________________________________________________
 
 sudo dkms remove -m nvidiabl -v x.xx --all
 sudo rm -rf /usr/src/nvidiabl-x.xx
 
-Where x.xx is the nvidiabl module version 0.58 or previous. To know what version are installed on your system, type:
+Where x.xx is the nvidiabl module version 0.58 or previous. To know what version are installed
+on your system, type:
 
 dkms status
 
 On some older version, the package name can be nvbacklight or nvidia_bl.
 
-If nvidiabl is the last module to use DKMS, you can remove the DKMS package, for instance with Ubuntu, type:
+If nvidiabl is the last module to use DKMS, you can remove the DKMS package, for instance with
+Ubuntu, type:
 
 sudo aptitude remove dkms
 
@@ -107,9 +121,12 @@ sudo aptitude remove dkms
 Driver loading:
 _______________
 
-The driver autoloads at boot up for Sony Vaio VGN AW11, FZ11 and FZ38 laptops and other laptops, have a look in the nvidiabl-laptops.h file.
-To load the driver manually, you need to add a line containing nvidiabl in /etc/modules.
-If you want the driver to autoload for your laptop without adding a line to /etc/modules, please give me the output of:
+The driver autoloads at boot up for Sony Vaio VGN AW11, FZ11 and FZ38 laptops and other
+laptops, have a look in the nvidiabl-laptops.h file.
+
+To load the driver manually, you need to add a line containing nvidiabl in /etc/modules. If
+you want the driver to autoload for your laptop without adding a line to /etc/modules, please
+give me the output of:
 
 lspci -nn
 cat /sys/class/dmi/id/sys_vendor
@@ -119,24 +136,30 @@ cat /sys/class/dmi/id/product_name
 Driver debug:
 _____________
 
-If you know Linux driver programming, you can modify yourself the nvidiabl-laptops.h and send me the line you added.
+If you know Linux driver programming, you can modify yourself the nvidiabl-laptops.h and send
+me the line you added.
 
 You can debug the driver with the following options:
 
 module_param_named(off, off, long, 0644);
-MODULE_PARM_DESC(off, "value to put in the register to disable the backlight, negative value is interpreted as percentage of maximum, -101 for default, autodetect otherwise");
+MODULE_PARM_DESC(off, "value to put in the register to disable the backlight, negative value
+is interpreted as percentage of maximum, -101 for default, autodetect otherwise");
 
 module_param_named(min, min, long, 0644);
-MODULE_PARM_DESC(min, "minimum register value for the backlight, negative value is interpreted as percentage of maximum, -101 for default, autodetect otherwise");
+MODULE_PARM_DESC(min, "minimum register value for the backlight, negative value is interpreted
+as percentage of maximum, -101 for default, autodetect otherwise");
 
 module_param_named(max, max, long, 0644);
-MODULE_PARM_DESC(max, "maximum register value for the backlight, -101 for default, autodetect otherwise");
+MODULE_PARM_DESC(max, "maximum register value for the backlight, -101 for default, autodetect
+otherwise");
 
 module_param_named(screen_type, screen_type, long, 0644);
-MODULE_PARM_DESC(max, "screen type, 0 for default, 1 for auto, 2 to force LVDS, 3 to force EPD");
+MODULE_PARM_DESC(max, "screen type, 0 for default, 1 for auto, 2 to force LVDS, 3 to force
+EPD");
 
 module_param_named(pci_id, pci_id, ulong, 0644);
-MODULE_PARM_DESC(pci_id, "PCI ID of the Nvidia card - usefull only when not using autodetection and more than one Nvidia PCI device");
+MODULE_PARM_DESC(pci_id, "PCI ID of the Nvidia card - usefull only when not using
+autodetection and more than one Nvidia PCI device");
 
 module_param_named(model, model, charp, 0644);
 MODULE_PARM_DESC(model, "backlight model, must be empty for autodetection, nv4x, or nv5x");
@@ -153,7 +176,11 @@ sudo modprobe nvidiabl min=50 max=500
 I can change the backlight value from the power settings GUI but my Fn keys are not working:
 ____________________________________________________________________________________________
 
-On https://github.com/guillaumezin/nvidiabl/blob/master/scripts, there are bash (in /usr/local/sbin) and ACPI (in /etc) scripts examples that permit on my laptop to use Fn keys to change the backlight settings. This is an ugly workaround (you don't have OSD this way), good practice should be to have a look at the /usr/share/doc/udev/README.keymap.txt.gz and fill a bug report.
+On https://github.com/guillaumezin/nvidiabl/blob/master/scripts, there are bash (in
+/usr/local/sbin) and ACPI (in /etc) scripts examples that permit on my laptop to use Fn keys
+to change the backlight settings. This is an ugly workaround (you don't have OSD this way),
+good practice should be to have a look at the /usr/share/doc/udev/README.keymap.txt.gz and
+fill a bug report.
 
 There is some intereting scripts here too: http://dev.osource.se/software/obacklight.
 
@@ -161,7 +188,9 @@ There is some intereting scripts here too: http://dev.osource.se/software/obackl
 Redirect brightness control Fn keys on Lenovo's Thinkpads
 _________________________________________________________
 
-In order to redirect the brightness control Fn keys to nvidiabl you have to disable the brightness feature of the thinkpad acpi module. Simple create the file /etc/modprobe.d/thinkpad.conf and add the line
+In order to redirect the brightness control Fn keys to nvidiabl you have to disable the
+brightness feature of the thinkpad acpi module. Simple create the file
+/etc/modprobe.d/thinkpad.conf and add the line
 
   options thinkpad_acpi brightness_enable=0
 
@@ -169,9 +198,10 @@ Then type:
 
 sudo rmmod thinkpad_acpi
 sudo modprobe nividabl
-sudo modprobel thinkpad_acpi
+sudo modprobe thinkpad_acpi
 
-Instead of a modprobe option you may reconfigure the boot loader and add thinkpad_acpi.brightness_enable=0 to the command line.
+Instead of a modprobe option you may reconfigure the boot loader and add
+thinkpad_acpi.brightness_enable=0 to the command line.
 
 
 nVidia staff is of course free to ship this driver with theirs!
