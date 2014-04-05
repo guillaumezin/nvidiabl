@@ -1,5 +1,5 @@
 TARGET 		:= nvidiabl
-VERSION		:= 0.86
+VERSION		:= 0.87
 RELEASE_NAME	:= $(TARGET)-$(VERSION)
 
 KVER		:= $(shell uname -r)
@@ -16,7 +16,7 @@ $(TARGET)-objs	:= $(OBJS)
 # Comment/uncomment to enable/disable debugging
 DEBUG 		= y
 
-EXTRA_CFLAGS 	= -Wno-unused-function
+EXTRA_CFLAGS 	= -Wno-unused-function -DCONFIG_FB_BACKLIGHT
 
 ifeq ($(DEBUG),y)
 EXTRA_CFLAGS += -DNVIDIA_BL_DEBUG
