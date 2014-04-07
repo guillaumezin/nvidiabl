@@ -1,5 +1,5 @@
 TARGET 		:= nvidiabl
-VERSION		:= 0.87
+VERSION		:= 0.88
 RELEASE_NAME	:= $(TARGET)-$(VERSION)
 
 KVER		:= $(shell uname -r)
@@ -92,8 +92,7 @@ dkms-remove:
 
 dkms-install: clean dkms-conf
 	sudo mkdir /usr/src/$(TARGET)-$(VERSION)
-	sudo cp -rf * /usr/src/$(TARGET)-$(VERSION)
-	sudo rm -rf /usr/src/$(TARGET)-$(VERSION)/.git /usr/src/$(TARGET)-$(VERSION)/scripts
+	sudo rsync -lr --progress . /usr/src/$(TARGET)-$(VERSION) --exclude install --exclude ".*"	
 	sudo dkms add build install -m $(TARGET) -v $(VERSION)
 
 dkms-release:
