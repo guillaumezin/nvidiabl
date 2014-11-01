@@ -173,6 +173,8 @@ NVIDIABL_DECLARE_GPU_MODEL(0x0863, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x0865, nv5x_driver_data),
 /* Geforce 9400M G (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x0866, nv5x_driver_data),
+/* Geforce 9400 */
+NVIDIABL_DECLARE_GPU_MODEL(0x0869, nv5x_driver_data),
 /* Geforce 9100M G (195.36) */
 NVIDIABL_DECLARE_GPU_MODEL(0x086e, nv5x_driver_data),
 /* Geforce 8200M G (195.36) */
