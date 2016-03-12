@@ -541,3 +541,5 @@ NVIDIABL_DECLARE_GPU_MODEL(0x11fc, nv5x_driver_data),
 NVIDIABL_DECLARE_GPU_MODEL(0x12b9, nv5x_driver_data),
 /* Quadro K510M (334.21) */
 NVIDIABL_DECLARE_GPU_MODEL(0x12ba, nv5x_driver_data),
+/* Quadro M2000M (361.28) */
+NVIDIABL_DECLARE_GPU_MODEL(0x13b0, nv5x_driver_data),
