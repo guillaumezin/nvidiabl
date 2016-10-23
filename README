@@ -1,3 +1,5 @@
+/!\ Please note that I don't maintain this repository anymore, please have a look at forked projects. /!\
+
 I wrote a little Linux driver based on Andy Wingo's work
 (http://wingolog.org/pub/nvbacklight-0.1.tar.bz2) and MacTel Team
 (https://launchpad.net/~mactel-support) that enables the control of laptop backlight connected
